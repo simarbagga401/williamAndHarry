@@ -3,12 +3,12 @@
     <Navbar v-if="!mobile" />
     <Hamburger v-if="mobile" />
     <section
-      class="flex flex-col items-center w-full justify-center h-full px-20"
+      class="flex flex-col items-center w-full justify-evenly h-full px-20"
     >
-      <h1 class="font-bold text-4xl p-10">
+      <h1 class="font-bold text-4xl p-2">
         {{ suits[parseInt(id.toString()) - 1].name }}
       </h1>
-      <div class="description-container h-20">
+      <div class="description-container h-30">
         <p>
           {{ suits[parseInt(id.toString()) - 1].description }}
         </p>

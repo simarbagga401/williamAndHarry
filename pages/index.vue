@@ -2,7 +2,7 @@
   <main class="flex flex-col items-center h-screen w-screen">
     <Navbar v-if="!mobile"/>
     <Hamburger v-if="mobile"/>
-    <section class="flex items-center w-full justify-center h-full px-10">
+    <section class="flex items-center w-full justify-center h-full px-20">
       <Carousel class="relative w-full max-w-sm">
         <CarouselContent>
           <CarouselItem>

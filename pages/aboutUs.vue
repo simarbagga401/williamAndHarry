@@ -36,6 +36,9 @@ const mobile = window.innerWidth < 768;
 </script>
 
 <style scoped>
+section{
+  overflow:auto;
+}
 .navbar{
   position:absolute;
   top:0;

@@ -1,6 +1,7 @@
 <template>
   <main class="flex flex-col items-center h-screen w-screen">
-    <Navbar />
+    <Navbar v-if="!mobile"/>
+    <Hamburger v-if="mobile"/>
     <section class="flex items-center w-full justify-center h-full px-10">
       <Carousel class="relative w-full max-w-sm">
         <CarouselContent>
@@ -52,6 +53,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
+const mobile = window.innerWidth < 768;
 
 import whiteCoatImage from "~/assets/images/white-coat.jpeg";
 import whitePantImage from "~/assets/images/white-pant.jpeg";

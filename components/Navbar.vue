@@ -1,33 +1,14 @@
 <template>
   <nav class="w-full flex items-center justify-end h-16">
     <img src="~/assets/images/logo.png" alt="logo" class="logo" />
-    <DropdownMenu class="dropDownMenu">
-      <DropdownMenuTrigger>
-        <img src="~/assets/images/bars-solid.svg" alt="" class="w-7 mx-10" />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuItem @click="navigateTo('/')">Shop</DropdownMenuItem>
-        <DropdownMenuItem @click="navigateTo('/myOrders')">
-          My orders
-        </DropdownMenuItem>
-        <DropdownMenuItem @click="navigateTo('/aboutUs')">
-          About Us
-        </DropdownMenuItem>
-        <DropdownMenuItem @click="handleSignOut"> Sign out </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <NuxtLink to="/" class="mx-5">Shop</NuxtLink>
+    <NuxtLink to="/myOrders" class="mx-5">My orders</NuxtLink>
+    <NuxtLink to="/aboutUs" class="mx-5">About Us</NuxtLink>
+    <Button @click="handleSignOut" class="mx-5" >Sign out</Button>
   </nav>
 </template>
 
 <script setup lang="ts">
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 const auth = useFirebaseAuth();
 import { signOut } from "firebase/auth";
@@ -38,12 +19,6 @@ const handleSignOut = () => {
 </script>
 
 <style scoped>
-/* @media screen and (max-width: 768px) {
-  .dropDownMenu {
-    display: none;
-  }
-} */
-
 .logo {
   width: 60px;
   position: absolute;

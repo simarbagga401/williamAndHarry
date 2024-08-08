@@ -1,6 +1,7 @@
 <template>
   <main class="p-10 flex flex-col items-center justify-evenly w-full h-screen">
-    <Navbar class="navbar"/>
+    <Navbar v-if="!mobile" class="navbar" />
+    <Hamburger v-if="mobile" class="navbar" />
       <h1 class="font-bold text-4xl p-10">About Us</h1>
     <section class="w-full h-3/4">
       <p>
@@ -30,7 +31,9 @@
   </main>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const mobile = window.innerWidth < 768;
+</script>
 
 <style scoped>
 .navbar{

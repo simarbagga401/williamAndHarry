@@ -3,13 +3,12 @@
     <img src="~/assets/images/logo.png" alt="logo" class="logo" />
     <NuxtLink to="/" class="mx-5">Shop</NuxtLink>
     <NuxtLink to="/myOrders" class="mx-5">My orders</NuxtLink>
-    <NuxtLink to="/aboutUs" class="mx-5">About Us</NuxtLink>
-    <Button @click="handleSignOut" class="mx-5" >Sign out</Button>
+    <NuxtLink to="aboutUs" class="mx-5">About us</NuxtLink>
+    <Button @click="handleSignOut" class="mx-5">Sign out</Button>
   </nav>
 </template>
 
 <script setup lang="ts">
-
 const auth = useFirebaseAuth();
 import { signOut } from "firebase/auth";
 

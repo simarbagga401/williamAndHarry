@@ -1,42 +1,30 @@
 <template>
   <main class="flex flex-col items-center h-screen w-screen">
-    <Navbar v-if="!mobile"/>
-    <Hamburger v-if="mobile"/>
-    <section class="flex items-center w-full justify-center h-full px-20">
-      <Carousel class="relative w-full max-w-sm">
-        <CarouselContent>
-          <CarouselItem>
-            <div class="p-1">
-              <Card>
-                <CardContent
-                  class="flex aspect-square items-center justify-center p-6"
-                >
-                  <img :src="suit.coatImage" />
-                </CardContent>
-              </Card>
-            </div>
-          </CarouselItem>
-          <CarouselItem>
-            <div class="p-1">
-              <Card>
-                <CardContent
-                  class="flex aspect-square items-center justify-center p-6"
-                >
-                  <img :src="suit.pantImage" />
-                </CardContent>
-              </Card>
-            </div>
-          </CarouselItem>
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
+    <Navbar v-if="!mobile" />
+    <Hamburger v-if="mobile" />
+    <section class="w-full h-full">
+      <Card v-for="(suit, i) in suits" :key="i" class="m-10 card max-h-[600px]">
+        <CardHeader>
+          <CardTitle>{{ suit.name }}</CardTitle>
+          <CardDescription>{{ suit.description }}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <img :src="suit.coatImage" />
+        </CardContent>
+        <CardFooter>
+          <p class="text-lg font-bold">{{ suit.price }}</p>
+          <Button class="mx-10" @click="navigateTo(`/suits/${suit.id}`)"
+            >Buy Now</Button
+          >
+        </CardFooter>
+      </Card>
     </section>
   </main>
 </template>
 
 <script setup lang="ts">
-import { Button } from "@/components/ui/button";
+const mobile = window.innerWidth < 768;
+import { suits } from "~/products";
 import {
   Card,
   CardContent,
@@ -45,26 +33,20 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-
-const mobile = window.innerWidth < 768;
-
-import whiteCoatImage from "~/assets/images/white-coat.jpeg";
-import whitePantImage from "~/assets/images/white-pant.jpeg";
-const suit = {
-  name: "White Suit",
-  description:
-    " A classic blue jacket, often in shades like navy or royal blue. Coordinating trousers in the same shade of blue as the coat",
-  coatImage: whiteCoatImage,
-  pantImage: whitePantImage,
-};
 </script>
 
 <style scoped>
+img {
+  width: clamp(200px, 100%, 400px);
+}
+.card {
+  width: clamp(200px, 80%, 600px);
+}
+section {
+  overflow: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  align-items: center;
+  justify-content: center;
+}
 </style>

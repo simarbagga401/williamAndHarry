@@ -2,7 +2,17 @@
   <main class="flex flex-col items-center h-screen w-screen">
     <Navbar v-if="!mobile" />
     <Hamburger v-if="mobile" />
-    <section class="flex items-center w-full justify-center h-full px-20">
+    <section
+      class="flex flex-col items-center w-full justify-center h-full px-20"
+    >
+      <h1 class="font-bold text-4xl p-10">
+        {{ suits[parseInt(id.toString()) - 1].name }}
+      </h1>
+      <div class="description-container h-20">
+        <p>
+          {{ suits[parseInt(id.toString()) - 1].description }}
+        </p>
+      </div>
       <Carousel class="relative w-full max-w-sm">
         <CarouselContent>
           <CarouselItem>
@@ -31,6 +41,10 @@
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
+      <footer class="flex items-center h-16 p-10">
+        <p class="font-bold">₹{{ suits[parseInt(id.toString()) - 1].price }}</p>
+        <Button class="mx-10">Buy Now</Button>
+      </footer>
     </section>
   </main>
 </template>
@@ -60,4 +74,12 @@ const mobile = window.innerWidth < 768;
 const { id } = useRoute().params;
 </script>
 
-<style scoped></style>
+<style scoped>
+.description-container {
+  overflow: auto;
+  padding:10px;
+}
+p{
+  text-align: center;
+}
+</style>

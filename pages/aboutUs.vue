@@ -1,9 +1,7 @@
 <template>
   <main class="p-10 flex flex-col items-center justify-evenly w-full h-screen">
-    <nav class="h-1/6 flex items-center justify-center">
-      <img src="~/assets/images/logo.png" alt="logo" class="logo" />
-      <h1 class="font-bold text-4xl">About Us</h1>
-    </nav>
+    <Navbar class="navbar"/>
+      <h1 class="font-bold text-4xl p-10">About Us</h1>
     <section class="w-full h-3/4">
       <p>
         Welcome to William & Harry, your premier destination for exceptional
@@ -35,6 +33,10 @@
 <script setup lang="ts"></script>
 
 <style scoped>
+.navbar{
+  position:absolute;
+  top:0;
+}
 .logo {
   width: 60px;
   position: absolute;

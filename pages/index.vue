@@ -1,11 +1,6 @@
 <template>
   <main class="flex flex-col items-center h-screen w-screen">
-    <nav class="w-full flex items-center justify-end">
-      <img src="~/assets/images/logo.png" alt="logo" class="logo" />
-      <NuxtLink class="p-4" to="/myOrder">My orders</NuxtLink>
-      <NuxtLink class="p-4" to="/aboutUs" >About us</NuxtLink>
-      <Button @click="handleSignOut" class="m-4">sign out</Button>
-    </nav>
+    <Navbar />
     <section class="flex items-center w-full justify-center h-full px-10">
       <Carousel class="relative w-full max-w-sm">
         <CarouselContent>
@@ -40,7 +35,6 @@
 </template>
 
 <script setup lang="ts">
-import { signOut } from "firebase/auth";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -58,8 +52,6 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-const auth = useFirebaseAuth();
-const user = useCurrentUser();
 
 import whiteCoatImage from "~/assets/images/white-coat.jpeg";
 import whitePantImage from "~/assets/images/white-pant.jpeg";
@@ -70,17 +62,7 @@ const suit = {
   coatImage: whiteCoatImage,
   pantImage: whitePantImage,
 };
-
-const handleSignOut = () => {
-  if (auth) signOut(auth);
-};
 </script>
 
 <style scoped>
-.logo {
-  width: 60px;
-  position: absolute;
-  top: 10px;
-  left: 10px;
-}
 </style>

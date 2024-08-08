@@ -1,43 +1,27 @@
 <template>
-  <main class="flex flex-col items-center h-sc">
-    <nav class="w-screen flex items-center justify-end">
+  <main class="flex flex-col items-center h-screen w-screen">
+    <nav class="w-full flex items-center justify-end">
       <img src="~/assets/images/logo.png" alt="logo" class="logo" />
       <p>{{ user?.displayName }}</p>
       <img :src="user?.photoURL ?? ''" class="w-10 ml-3 rounded-full" />
       <Button @click="handleSignOut" class="m-4">sign out</Button>
     </nav>
-    <section class="flex items-center w-full justify-center h-full">
-      <Carousel>
-        <CarouselContent class="relative w-full max-w-xs">
-          <CarouselItem v-for="(suit, i) in suits" :key="i">
-            <Card class="w-4/5">
-              <CardHeader>
-                <CardTitle>{{ suit.name }}</CardTitle>
-                <CardDescription>{{ suit.description }}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Carousel>
-                  <CarouselContent>
-                    <CarouselItem>
-                      <!-- <img src="~/assets/images/white-coat.jpeg" width="200px"> -->
-                      a
-                    </CarouselItem>
-                    <CarouselItem>
-                      <!-- <img src="~/assets/images/white-pant.jpeg" width="200px"> -->
-                      b
-                    </CarouselItem>
-                  </CarouselContent>
-                  <CarouselPrevious />
-                  <CarouselNext />
-                </Carousel>
-              </CardContent>
-              <CardFooter> Card Footer </CardFooter>
-            </Card>
-          </CarouselItem>
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
+    <section class="flex items-center w-full justify-center h-full px-10">
+      <Carousel class="relative w-full max-w-xl">
+    <CarouselContent>
+      <CarouselItem v-for="(_, index) in 5" :key="index">
+        <div class="p-1">
+          <Card>
+            <CardContent class="flex aspect-square items-center justify-center p-6">
+              <span class="text-4xl font-semibold">{{ index + 1 }}</span>
+            </CardContent>
+          </Card>
+        </div>
+      </CarouselItem>
+    </CarouselContent>
+    <!-- <CarouselPrevious />
+    <CarouselNext /> -->
+  </Carousel>
     </section>
 
 
@@ -80,4 +64,5 @@ const handleSignOut = () => {
   top: 10px;
   left: 10px;
 }
+
 </style>

@@ -20,9 +20,10 @@ const signInwithGoogle = () => {
     <div class="flex items-center justify-center py-12">
       <div class="mx-auto grid w-[350px] gap-6">
         <div class="grid gap-2 text-center">
+          <img src="~/assets/images/logo.png" alt="logo" class="logo mx-auto" />
           <h1 class="text-3xl font-bold">Join</h1>
           <p class="text-balance text-muted-foreground">
-            Buy premium Quality Coats from us
+            Buy premium Quality Coats
           </p>
         </div>
         <div class="grid gap-4">
@@ -47,9 +48,21 @@ const signInwithGoogle = () => {
 .image {
   height: 100vh;
 }
+.logo {
+  width: 60px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
 @media screen and (max-width: 1023px) {
   .image {
     height: 75.6vh;
+  }
+  .logo {
+    position: inherit;
+    margin-top: -30px;
+    margin-bottom: 30px;
   }
 }
 </style>

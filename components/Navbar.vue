@@ -4,6 +4,8 @@
     <NuxtLink to="/" class="mx-5">Shop</NuxtLink>
     <NuxtLink to="/myOrders" class="mx-5">My orders</NuxtLink>
     <NuxtLink to="aboutUs" class="mx-5">About us</NuxtLink>
+    <img :src="user?.photoURL ?? ''" class="w-10 ml-3 rounded-full" />
+    <p class="mx-5">{{ user?.displayName }}</p>
     <Button @click="handleSignOut" class="mx-5">Sign out</Button>
   </nav>
 </template>
@@ -12,6 +14,7 @@
 const auth = useFirebaseAuth();
 import { signOut } from "firebase/auth";
 
+const user = useCurrentUser();
 const handleSignOut = () => {
   if (auth) signOut(auth);
 };

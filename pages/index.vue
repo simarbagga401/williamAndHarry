@@ -11,9 +11,9 @@
         <CardContent>
           <img :src="suit.coatImage" />
         </CardContent>
-        <CardFooter>
-          <p class="text-lg font-bold">{{ suit.price }}</p>
-          <Button class="mx-10" @click="navigateTo(`/suits/${suit.id}`)"
+        <CardFooter class="flex justify-between">
+          <p class="text-lg font-bold">₹{{ suit.price }}</p>
+          <Button  @click="navigateTo(`/suits/${suit.id}`)"
             >Buy Now</Button
           >
         </CardFooter>

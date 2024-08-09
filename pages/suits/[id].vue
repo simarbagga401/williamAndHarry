@@ -8,7 +8,7 @@
       <h1 class="font-bold text-4xl">
         {{ suits[parseInt(id.toString()) - 1].name }}
       </h1>
-      <div class="description-container h-20 flex items-center ">
+      <div class="description-container h-25 flex items-center ">
         <p>
           {{ suits[parseInt(id.toString()) - 1].description }}
         </p>

@@ -19,7 +19,7 @@
           About Us
         </DropdownMenuItem>
         <DropdownMenuItem @click="handleSignOut" v-if="user"> Sign out </DropdownMenuItem>
-        <DropdownMenuItem @click="navigateTo('/login')" v-else> Sign out </DropdownMenuItem>
+        <DropdownMenuItem @click="navigateTo('/login')" v-else> Sign in </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   </nav>

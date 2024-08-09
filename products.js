@@ -16,7 +16,7 @@ export const suits = [
     description:
       "A classic blue jacket, often in shades like navy or royal blue. coordinating trousers in the same shade of blue as the coat",
     coatImage: greyCoat,
-    pantimage: greyPant,
+    pantImage: greyPant,
     price: 3500,
   },
   {

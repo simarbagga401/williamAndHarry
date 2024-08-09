@@ -1,6 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
+  runtimeConfig: {
+    public: {
+      ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
+    },
+  },
   devtools: { enabled: true },
   modules: ["@nuxtjs/tailwindcss", "shadcn-nuxt", "nuxt-vuefire"],
   shadcn: {

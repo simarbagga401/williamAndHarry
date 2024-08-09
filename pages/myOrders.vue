@@ -7,7 +7,8 @@
 </template>
 
 <script setup lang="ts">
-const mobile = window.innerWidth < 768;
+const mobile = window && window.innerWidth < 768;
+
 </script>
 
 <style scoped></style>

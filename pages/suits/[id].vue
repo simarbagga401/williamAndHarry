@@ -69,7 +69,8 @@ import {
 
 import { suits } from "~/products";
 
-const mobile = window.innerWidth < 768;
+const mobile = window && window.innerWidth < 768;
+
 
 const { id } = useRoute().params;
 </script>

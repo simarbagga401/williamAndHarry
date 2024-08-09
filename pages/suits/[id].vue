@@ -8,7 +8,7 @@
       <h1 class="font-bold text-4xl">
         {{ suits[parseInt(id.toString()) - 1].name }}
       </h1>
-      <div class="description-container h-20">
+      <div class="description-container h-20 flex items-center ">
         <p>
           {{ suits[parseInt(id.toString()) - 1].description }}
         </p>
@@ -41,9 +41,9 @@
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
-      <footer class="flex items-center max-h-16 p-5">
+      <footer class="flex items-center w-60 max-h-16 p-5 justify-between">
         <p class="font-bold">₹{{ suits[parseInt(id.toString()) - 1].price }}</p>
-        <Button class="mx-10">Buy Now</Button>
+        <Button>Buy Now</Button>
       </footer>
     </section>
   </main>

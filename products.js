@@ -12,7 +12,7 @@ import blackPant from "~/assets/images/black-pant.jpeg";
 export const suits = [
   {
     id: 1,
-    name: "Grey suit",
+    name: "Ash Royale",
     description:
       "A classic blue jacket, often in shades like navy or royal blue. coordinating trousers in the same shade of blue as the coat",
     coatImage: greyCoat,
@@ -21,7 +21,7 @@ export const suits = [
   },
   {
     id: 2,
-    name: "Blue Suit",
+    name: "Nautical Knight",
     description:
       " A classic blue jacket, often in shades like navy or royal blue. Coordinating trousers in the same shade of blue as the coat",
     coatImage: blueCoat,
@@ -30,7 +30,7 @@ export const suits = [
   },
   {
     id: 3,
-    name: "White Suit",
+    name: "Desert Monarch",
     description:
       " A classic blue jacket, often in shades like navy or royal blue. Coordinating trousers in the same shade of blue as the coat",
     coatImage: whiteCoat,
@@ -39,7 +39,7 @@ export const suits = [
   },
   {
     id: 4,
-    name: "Purple Suit",
+    name: "Mahogany Majesty",
     description:
       " A classic blue jacket, often in shades like navy or royal blue. Coordinating trousers in the same shade of blue as the coat",
     coatImage: purpleCoat,
@@ -48,7 +48,7 @@ export const suits = [
   },
   {
     id: 5,
-    name: "Black Suit",
+    name: "Midnight Majesty",
     description:
       " A classic blue jacket, often in shades like navy or royal blue. Coordinating trousers in the same shade of blue as the coat",
     coatImage: blackCoat,

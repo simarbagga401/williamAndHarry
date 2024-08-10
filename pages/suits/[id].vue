@@ -1,5 +1,6 @@
 <template>
   <main class="flex flex-col items-center h-screen w-screen">
+    <Toaster />
     <Navbar v-if="!mobile" />
     <Hamburger v-if="mobile" />
     <section
@@ -8,7 +9,7 @@
       <h1 class="font-bold text-4xl">
         {{ suits[parseInt(id.toString()) - 1].name }}
       </h1>
-      <div class="description-container h-25 flex items-center ">
+      <div class="description-container h-25 flex items-center">
         <p>
           {{ suits[parseInt(id.toString()) - 1].description }}
         </p>
@@ -43,7 +44,7 @@
       </Carousel>
       <footer class="flex items-center w-60 max-h-16 p-5 justify-between">
         <p class="font-bold">₹{{ suits[parseInt(id.toString()) - 1].price }}</p>
-        <Button>Buy Now</Button>
+        <Button @click="handleAddToCart">Add to Cart</Button>
       </footer>
     </section>
   </main>
@@ -66,11 +67,35 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import Toaster from "@/components/ui/toast/Toaster.vue";
+import { useToast } from "@/components/ui/toast/use-toast";
+import { db } from "~/firebase.js";
+import { collection, doc, updateDoc, setDoc } from "firebase/firestore";
+const { toast } = useToast();
 
 import { suits } from "~/products";
 
 const mobile = window && window.innerWidth < 768;
+let fetchedUser = ref<any>(null);
+const user = useCurrentUser();
 
+const handleAddToCart = async () => {
+  fetchedUser.value = useDocument(doc(collection(db, "users"), user.value?.uid));
+  await setDoc(doc(db, "users", user.value?.uid.toString()), {
+    name: user.value?.displayName,
+    cart: [
+      ...fetchedUser.value.value.cart,
+      {
+        name: suits[parseInt(id.toString()) - 1].name,
+        price: suits[parseInt(id.toString()) - 1].price,
+      },
+    ],
+  });
+
+  toast({
+    description: "item added to cart!",
+  });
+};
 
 const { id } = useRoute().params;
 </script>
@@ -78,9 +103,9 @@ const { id } = useRoute().params;
 <style scoped>
 .description-container {
   overflow: auto;
-  padding:10px;
+  padding: 10px;
 }
-p{
+p {
   text-align: center;
 }
 </style>

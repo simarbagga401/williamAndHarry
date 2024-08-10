@@ -18,6 +18,7 @@
         <DropdownMenuItem @click="navigateTo('/aboutUs')">
           About Us
         </DropdownMenuItem>
+        <DropdownMenuItem @click="navigateTo('/cart')">My Cart</DropdownMenuItem>
         <DropdownMenuItem @click="handleSignOut" v-if="user"> Sign out </DropdownMenuItem>
         <DropdownMenuItem @click="navigateTo('/login')" v-else> Sign in </DropdownMenuItem>
       </DropdownMenuContent>

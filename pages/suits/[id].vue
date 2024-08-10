@@ -1,6 +1,5 @@
 <template>
   <main class="flex flex-col items-center h-screen w-screen">
-    <Toaster />
     <Navbar v-if="!mobile" />
     <Hamburger v-if="mobile" />
     <section
@@ -67,22 +66,33 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import Toaster from "@/components/ui/toast/Toaster.vue";
-import { useToast } from "@/components/ui/toast/use-toast";
 import { db } from "~/firebase.js";
 import { collection, doc, updateDoc, setDoc } from "firebase/firestore";
-const { toast } = useToast();
 
 import { suits } from "~/products";
 
 const mobile = window && window.innerWidth < 768;
 let fetchedUser = ref<any>(null);
-const user = useCurrentUser();
+let user: any;
+onMounted(async () => {
+  user = await getCurrentUser();
+});
 
 const handleAddToCart = async () => {
-  fetchedUser.value = useDocument(doc(collection(db, "users"), user.value?.uid));
-  await setDoc(doc(db, "users", user.value?.uid.toString()), {
-    name: user.value?.displayName,
+  if(user == null) {
+    navigateTo('/login')
+  }
+  fetchedUser.value = await useDocument(doc(collection(db, "users"), user.uid));
+
+  if (fetchedUser.value.value == null) {
+    await setDoc(doc(db, "users", user.uid), {
+      name: user.displayName,
+      cart: [],
+    });
+  }
+
+  await setDoc(doc(db, "users", user.uid), {
+    name: user.displayName,
     cart: [
       ...fetchedUser.value.value.cart,
       {
@@ -90,10 +100,6 @@ const handleAddToCart = async () => {
         price: suits[parseInt(id.toString()) - 1].price,
       },
     ],
-  });
-
-  toast({
-    description: "item added to cart!",
   });
 };
 

@@ -84,6 +84,7 @@ const handleAddToCart = async () => {
     id: suits[parseInt(id.toString()) - 1].id,
     name: suits[parseInt(id.toString()) - 1].name,
     price: suits[parseInt(id.toString()) - 1].price,
+    coatImage: suits[parseInt(id.toString()) - 1].coatImage,
   });
 
 };

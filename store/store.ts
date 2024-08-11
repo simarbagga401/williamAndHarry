@@ -3,11 +3,15 @@ export const useUserDetailsStore = defineStore("userDetails", () => {
   const addToCart = (product: Suit) => {
     cart.value.push(product);
   };
-  return { cart, addToCart };
+  const deleteFromCart = (id: number) => {
+    cart.value = cart.value.filter((product) => product.id !== id);
+  }
+  return { cart, addToCart , deleteFromCart};
 });
 
 interface Suit {
   id: number;
   name: string;
   price: number;
+  coatImage:string;
 }

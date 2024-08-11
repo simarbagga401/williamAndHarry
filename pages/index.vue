@@ -50,4 +50,10 @@ section {
   align-items: center;
   justify-content: center;
 }
+
+@media (max-width: 768px) {
+  img{
+    width:100px;
+  }
+}
 </style>

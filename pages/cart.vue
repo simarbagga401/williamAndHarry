@@ -6,7 +6,7 @@
       <h1 class="font-bold text-4xl p-10">My Cart</h1>
       <div class="cart-items-container h-1/2">
         <template v-for="(item, i) in cart" :key="i" v-if="cart.length != 0">
-          <Card class="flex m-5 card">
+          <Card class="flex m-5 card justify-between">
             <CardHeader>
               <img :src="item.coatImage" width="80px" />
             </CardHeader>
@@ -31,7 +31,7 @@
           v-if="cart.length != 0"
           class="flex items-center justify-between p-3"
         >
-          <p class="font-bold">Total :</p>
+          <p class="font-bold">Total : {{ totalAmount }}</p>
           <Button>Checkout</Button>
         </footer>
       </Card>
@@ -57,7 +57,7 @@ const mobile = window && window.innerWidth < 768;
 const user = useCurrentUser();
 const store = useUserDetailsStore();
 const cart = store.cart;
-// const fetchedUser =
+const totalAmount = cart.reduce((acc, item) => acc + item.price, 0);
 
 const removeFromCart = (id: number) => {
   store.deleteFromCart(id);

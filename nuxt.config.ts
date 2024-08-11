@@ -7,7 +7,13 @@ export default defineNuxtConfig({
     },
   },
   devtools: { enabled: true },
-  modules: ["@nuxtjs/tailwindcss", "shadcn-nuxt", "nuxt-vuefire"],
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "shadcn-nuxt",
+    "nuxt-vuefire",
+    "@pinia/nuxt",
+  ],
+
   shadcn: {
     /**
      * Prefix for all the imported component
@@ -22,7 +28,7 @@ export default defineNuxtConfig({
   vuefire: {
     auth: {
       enabled: true,
-      sessionCookie:false,
+      sessionCookie: false,
     },
     config: {
       apiKey: "AIzaSyDp3g2LHR97UdcsgMhAQNT9NK7KNibwOL0",

@@ -12,15 +12,21 @@
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem @click="navigateTo('/')">Shop</DropdownMenuItem>
-        <DropdownMenuItem @click="navigateTo('/myOrders')">
+        <DropdownMenuItem @click="navigateTo('/myOrders')" v-if="user">
           My orders
         </DropdownMenuItem>
         <DropdownMenuItem @click="navigateTo('/aboutUs')">
           About Us
         </DropdownMenuItem>
-        <DropdownMenuItem @click="navigateTo('/cart')">My Cart</DropdownMenuItem>
-        <DropdownMenuItem @click="handleSignOut" v-if="user"> Sign out </DropdownMenuItem>
-        <DropdownMenuItem @click="navigateTo('/login')" v-else> Sign in </DropdownMenuItem>
+        <DropdownMenuItem @click="navigateTo('/cart')" v-if="user"
+          >My Cart</DropdownMenuItem
+        >
+        <DropdownMenuItem @click="handleSignOut" v-if="user">
+          Sign out
+        </DropdownMenuItem>
+        <DropdownMenuItem @click="navigateTo('/login')" v-else>
+          Sign in
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   </nav>

@@ -68,39 +68,24 @@ import {
 } from "@/components/ui/carousel";
 import { db } from "~/firebase.js";
 import { collection, doc, updateDoc, setDoc } from "firebase/firestore";
+import { useUserDetailsStore } from "~/store/store";
 
 import { suits } from "~/products";
 
 const mobile = window && window.innerWidth < 768;
-let fetchedUser = ref<any>(null);
-let user: any;
-onMounted(async () => {
-  user = await getCurrentUser();
-});
+let user = useCurrentUser();
+const store = useUserDetailsStore();
 
 const handleAddToCart = async () => {
-  if(user == null) {
-    navigateTo('/login')
+  if (user.value == null) {
+    navigateTo("/login");
   }
-  fetchedUser.value = await useDocument(doc(collection(db, "users"), user.uid));
-
-  if (fetchedUser.value.value == null) {
-    await setDoc(doc(db, "users", user.uid), {
-      name: user.displayName,
-      cart: [],
-    });
-  }
-
-  await setDoc(doc(db, "users", user.uid), {
-    name: user.displayName,
-    cart: [
-      ...fetchedUser.value.value.cart,
-      {
-        name: suits[parseInt(id.toString()) - 1].name,
-        price: suits[parseInt(id.toString()) - 1].price,
-      },
-    ],
+  store.addToCart({
+    id: suits[parseInt(id.toString()) - 1].id,
+    name: suits[parseInt(id.toString()) - 1].name,
+    price: suits[parseInt(id.toString()) - 1].price,
   });
+
 };
 
 const { id } = useRoute().params;

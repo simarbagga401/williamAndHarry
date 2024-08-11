@@ -4,7 +4,7 @@
     <img :src="user?.photoURL ?? ''" class="w-10 ml-3 rounded-full" />
     <p class="mx-5">{{ user?.displayName }}</p>
     <NuxtLink to="/" class="mx-5">Shop</NuxtLink>
-    <NuxtLink to="/myOrders" class="mx-5">My orders</NuxtLink>
+    <NuxtLink to="/myOrders" v-if="user" class="mx-5">My orders</NuxtLink>
     <NuxtLink to="/aboutUs" class="mx-5">About us</NuxtLink>
     <Button variant="outline" @click="navigateTo('/cart')" v-if="user">
       <img

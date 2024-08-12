@@ -3,8 +3,10 @@
     <section
       class="hero-section flex flex-col items-center justify-center w-full"
     >
-      <h1 class="font-bold text-6xl text-white p-10 ">Premium Suits</h1>
-      <p class="text-2xl p-2 text-[#07203F] justify-self-center bg-slate-50 font-[roller-coaster]">
+      <h1 class="font-bold text-6xl text-white p-10">Premium Suits</h1>
+      <p
+        class="text-2xl p-2 text-[#07203F] justify-self-center bg-slate-50 font-[roller-coaster]"
+      >
         Choose from a wide range of suits for every occasion.
       </p>
     </section>
@@ -58,13 +60,26 @@
         <CarouselNext />
       </Carousel>
     </section>
-    <footer class="w-full h-[200px] bg-[#07203F]">
+    <footer class="w-full h-[100px] bg-[#07203F] flex">
       <div
         class="footer-links-container h-full flex w-1/2 justify-center items-center"
       >
-          <NuxtLink to="/about" class="text-white p-1">Shop</NuxtLink>
-          <NuxtLink to="/about" class="text-white p-1">About Us</NuxtLink>
-          <NuxtLink to="/about" class="text-white p-1">Sign In</NuxtLink>
+        <NuxtLink to="/shop" class="text-white p-5">Shop</NuxtLink>
+        <NuxtLink to="/aboutUs" class="text-white p-5">About Us</NuxtLink>
+        <NuxtLink to="/login" class="text-white p-5">Sign In</NuxtLink>
+      </div>
+      <div
+        class="footer-social-media-container h-full flex w-1/2 justify-center items-center"
+      >
+        <img
+          src="~/assets/images/instagram-brands-solid.svg"
+          class="social-media-link"
+        />
+        <img
+          src="~/assets/images/envelope-solid.svg"
+          class="social-media-link"
+        />
+        <img src="~/assets/images/phone-solid.svg" class="social-media-link" />
       </div>
     </footer>
   </main>
@@ -136,9 +151,28 @@ img {
   border-radius: 5px;
 }
 
+.social-media-link {
+  width: 30px;
+  padding: 5px;
+  background-color: white;
+  margin: 10px;
+  border-radius: 10px;
+}
+
 @media (max-width: 768px) {
   img {
     width: 100px;
+  }
+  footer {
+    flex-direction: column;
+    height: 200px;
+    align-items: center;
+  }
+  .footer-links-container {
+    width:100%;
+  }
+  .footer-social-media-container {
+    width:100%;
   }
 }
 </style>

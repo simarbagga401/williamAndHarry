@@ -1,6 +1,6 @@
 <template>
   <nav class="w-full flex items-center justify-end h-16 bg-white">
-    <img src="~/assets/images/logo3.png" alt="logo" class="logo" />
+    <img src="~/assets/images/logo-clear.png" alt="logo" class="logo" />
     <DropdownMenu class="dropDownMenu">
       <DropdownMenuTrigger>
         <img src="~/assets/images/bars-solid.svg" alt="" class="w-7 mx-10" />

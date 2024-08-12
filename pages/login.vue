@@ -20,7 +20,6 @@ const signInwithGoogle = () => {
     <div class="flex items-center justify-center py-12">
       <div class="mx-auto grid w-[350px] gap-6">
         <div class="grid gap-2 text-center">
-          <img src="~/assets/images/logo.png" alt="logo" class="logo mx-auto" />
           <h1 class="text-3xl font-bold">Join</h1>
           <p class="text-balance text-muted-foreground">
             Buy premium Quality Coats

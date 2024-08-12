@@ -35,7 +35,6 @@
 
 <style scoped>
 section{
-  overflow:auto;
 }
 .navbar{
   position:absolute;

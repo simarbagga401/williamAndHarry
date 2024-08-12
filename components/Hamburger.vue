@@ -1,5 +1,5 @@
 <template>
-  <nav class="w-full flex items-center justify-end h-16">
+  <nav class="w-full flex items-center justify-end h-16 bg-white">
     <img src="~/assets/images/logo.png" alt="logo" class="logo" />
     <DropdownMenu class="dropDownMenu">
       <DropdownMenuTrigger>

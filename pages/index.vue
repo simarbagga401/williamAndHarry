@@ -41,7 +41,6 @@ img {
   width: clamp(200px, 80%, 600px);
 }
 section {
-  overflow: auto;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   align-items: center;

@@ -1,9 +1,9 @@
 <template>
-  <main class="flex flex-col items-center h-screen w-screen py-10">
-    <section class="w-full h-full">
+  <main class="flex flex-col items-center justify-center h-screen w-screen py-10">
+    <section class="h-full">
       <Card v-for="(suit, i) in suits" :key="i" class="m-10 card max-h-[600px]">
         <CardHeader>
-          <CardTitle>{{ suit.name }}</CardTitle>
+          <CardTitle class="text-[#07203F]" >{{ suit.name }}</CardTitle>
           <CardDescription>{{ suit.description }}</CardDescription>
         </CardHeader>
         <CardContent>
@@ -41,6 +41,7 @@ img {
   width: clamp(200px, 80%, 600px);
 }
 section {
+  width: clamp(400px,80%,1000px);
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   align-items: center;

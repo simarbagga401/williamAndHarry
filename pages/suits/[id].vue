@@ -4,7 +4,7 @@
     <section
       class="flex flex-col items-center w-full justify-evenly h-full px-20"
     >
-      <h1 class="font-bold text-4xl">
+      <h1 class="font-bold text-4xl text-[#07203F]">
         {{ suits[parseInt(id.toString()) - 1].name }}
       </h1>
       <div class="description-container h-25 flex items-center">

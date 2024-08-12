@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <section>
+    <NuxtLayout />
     <NuxtPage />
-  </div>
+  </section>
 </template>
 
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <style>
 body {

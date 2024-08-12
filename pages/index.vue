@@ -1,7 +1,5 @@
 <template>
-  <main class="flex flex-col items-center h-screen w-screen">
-    <Navbar v-if="!mobile" />
-    <Hamburger v-if="mobile" />
+  <main class="flex flex-col items-center h-screen w-screen py-10">
     <section class="w-full h-full">
       <Card v-for="(suit, i) in suits" :key="i" class="m-10 card max-h-[600px]">
         <CardHeader>
@@ -23,7 +21,6 @@
 </template>
 
 <script setup lang="ts">
-const mobile = window && window.innerWidth < 768;
 
 import { suits } from "~/products";
 import {

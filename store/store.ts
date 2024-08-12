@@ -1,17 +1,20 @@
 export const useUserDetailsStore = defineStore("userDetails", () => {
-  const cart = ref<Suit[]>([]); // Add type annotation for the cart array
-  const addToCart = (product: Suit) => {
-    cart.value.push(product);
+  let cart = reactive<Suit[]>([]); // Add type annotation for the cart array
+
+  const addToCart = (suit: Suit) => {
+    cart.push(suit);
   };
-  const deleteFromCart = (id: number) => {
-    cart.value = cart.value.filter((product) => product.id !== id);
-  }
-  return { cart, addToCart , deleteFromCart};
+
+  const deleteFromCart = (id: Number) => {
+    let removeIndex = cart.map(item => item.id).indexOf(id)
+    cart.splice(removeIndex, 1);
+  };
+  return { cart, addToCart, deleteFromCart };
 });
 
 interface Suit {
   id: number;
   name: string;
   price: number;
-  coatImage:string;
+  coatImage: string;
 }

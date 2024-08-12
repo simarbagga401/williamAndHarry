@@ -1,7 +1,5 @@
 <template>
-  <main class="flex flex-col items-center h-screen w-screen">
-    <Navbar v-if="!mobile" />
-    <Hamburger v-if="mobile" />
+  <main class="flex flex-col items-center h-screen w-screen py-10">
     <section
       class="flex flex-col items-center w-full justify-evenly h-full px-20"
     >
@@ -72,7 +70,6 @@ import { useUserDetailsStore } from "~/store/store";
 
 import { suits } from "~/products";
 
-const mobile = window && window.innerWidth < 768;
 let user = useCurrentUser();
 const store = useUserDetailsStore();
 

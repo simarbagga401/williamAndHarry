@@ -1,7 +1,5 @@
 <template>
   <section class="flex flex-col items-center w-full h-screen">
-    <Navbar v-if="!mobile" class="navbar" />
-    <Hamburger v-if="mobile" class="navbar" />
     <main class="p-10 flex flex-col items-center justify-evenly w-full h-full">
       <h1 class="font-bold text-4xl p-10">My Cart</h1>
       <div class="cart-items-container h-1/2">
@@ -17,7 +15,7 @@
               }}</CardDescription>
             </CardContent>
             <CardFooter>
-              <Button @click="removeFromCart(item.id)">Delete</Button>
+              <Button @click="store.deleteFromCart(item.id)">Delete</Button>
             </CardFooter>
           </Card>
         </template>
@@ -53,30 +51,29 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-const mobile = window && window.innerWidth < 768;
 const user = useCurrentUser();
 const store = useUserDetailsStore();
 const cart = store.cart;
-const totalAmount = cart.reduce((acc, item) => acc + item.price, 0);
+const totalAmount = ref(cart.reduce((acc, item) => acc + item.price, 0));
 
-const removeFromCart = (id: number) => {
-  store.deleteFromCart(id);
-};
+watch(cart, () => {
+  totalAmount.value = cart.reduce((acc, item) => acc + item.price, 0);
+});
 </script>
 
 <style>
-.footer-container{
-  width:clamp(250px, 50%, 500px);
+.footer-container {
+  width: clamp(250px, 50%, 500px);
 }
 
-.cart-items-container{
-  overflow:auto;
+.cart-items-container {
+  overflow: auto;
 }
 
 @media (max-width: 768px) {
-  .card{
+  .card {
     flex-direction: column;
-    height:400px;
+    height: 400px;
   }
 }
 </style>

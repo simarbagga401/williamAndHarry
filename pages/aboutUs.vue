@@ -1,9 +1,7 @@
 <template>
   <main class="p-10 flex flex-col items-center justify-evenly w-full h-screen">
-    <Navbar v-if="!mobile" class="navbar" />
-    <Hamburger v-if="mobile" class="navbar" />
       <h1 class="font-bold text-4xl p-10">About Us</h1>
-    <section class="w-full h-3/4">
+    <section class="w-full h-3/4 py-2">
       <p>
         Welcome to William & Harry, your premier destination for exceptional
         men's formal suits in Mumbai. At William & Harry, we believe that
@@ -32,7 +30,6 @@
 </template>
 
 <script setup lang="ts">
-const mobile = window && window.innerWidth < 768;
 
 </script>
 

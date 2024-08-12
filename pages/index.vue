@@ -1,9 +1,15 @@
 <template>
-  <main class="flex flex-col items-center justify-center h-screen w-screen py-10">
-    <section class="h-full">
+  <main class="flex flex-col items-center justify-center w-full py-10">
+    <section class="hero-section flex flex-col items-center justify-center w-full">
+      <h1 class="font-bold text-4xl text-white">Premium Suits</h1>
+      <p class="text-lg text-center text-slate-50">
+        Choose from a wide range of suits for every occasion.
+      </p>
+    </section>
+    <section class="suits-container h-full">
       <Card v-for="(suit, i) in suits" :key="i" class="m-10 card max-h-[600px]">
         <CardHeader>
-          <CardTitle class="text-[#07203F]" >{{ suit.name }}</CardTitle>
+          <CardTitle class="text-[#07203F]">{{ suit.name }}</CardTitle>
           <CardDescription>{{ suit.description }}</CardDescription>
         </CardHeader>
         <CardContent>
@@ -11,9 +17,7 @@
         </CardContent>
         <CardFooter class="flex justify-between">
           <p class="text-lg font-bold">₹{{ suit.price }}</p>
-          <Button  @click="navigateTo(`/suits/${suit.id}`)"
-            >Buy Now</Button
-          >
+          <Button @click="navigateTo(`/suits/${suit.id}`)">Buy Now</Button>
         </CardFooter>
       </Card>
     </section>
@@ -21,7 +25,6 @@
 </template>
 
 <script setup lang="ts">
-
 import { suits } from "~/products";
 import {
   Card,
@@ -40,8 +43,15 @@ img {
 .card {
   width: clamp(200px, 80%, 600px);
 }
-section {
-  width: clamp(400px,80%,1000px);
+
+.hero-section{
+  height: 80vh;
+  background-image: url('~/assets/images/hero-bg.jpg');
+  background-size: cover;
+}
+
+.suits-container {
+  width: clamp(400px, 80%, 1000px);
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   align-items: center;
@@ -49,8 +59,8 @@ section {
 }
 
 @media (max-width: 768px) {
-  img{
-    width:100px;
+  img {
+    width: 100px;
   }
 }
 </style>

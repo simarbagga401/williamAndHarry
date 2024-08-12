@@ -19,8 +19,17 @@
           About Us
         </DropdownMenuItem>
         <DropdownMenuItem @click="navigateTo('/cart')" v-if="user"
-          >My Cart</DropdownMenuItem
-        >
+          >My Cart
+
+          <div
+            class="cart-items-container w-5 h-5 bg-red-500 rounded-full mx-3 overflow-hidden flex items-center justify-center"
+            v-show="store.cart.length > 0"
+          >
+            <p class="font-bold">
+              {{ store.cart.length }}
+            </p>
+          </div>
+        </DropdownMenuItem>
         <DropdownMenuItem @click="handleSignOut" v-if="user">
           Sign out
         </DropdownMenuItem>
@@ -45,6 +54,9 @@ import {
 const auth = useFirebaseAuth();
 import { signOut } from "firebase/auth";
 const user = useCurrentUser();
+import { useUserDetailsStore } from "~/store/store";
+
+const store = useUserDetailsStore();
 
 const handleSignOut = () => {
   if (auth) signOut(auth);

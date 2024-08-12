@@ -5,13 +5,13 @@ export const useUserDetailsStore = defineStore("userDetails", () => {
     cart.push(suit);
   };
 
-  const totalAmount = computed(() =>
-    cart.reduce((acc, item) => acc + item.price * item.quantity, 0)
-  );
-
   const deleteFromCart = (id: number) => {
-    let removeIndex = cart.map((item) => item.id).indexOf(id);
-    cart.splice(removeIndex, 1);
+    if (cart[cart.findIndex((item) => item.id == id)].quantity > 1) {
+      cart[cart.findIndex((item) => item.id == id)].quantity--;
+    } else {
+      let removeIndex = cart.map((item) => item.id).indexOf(id);
+      cart.splice(removeIndex, 1);
+    }
   };
 
   const incrementQuantity = (id: number) => {
@@ -19,7 +19,10 @@ export const useUserDetailsStore = defineStore("userDetails", () => {
     cart[index].quantity++;
   };
 
-  return { cart, addToCart, deleteFromCart, totalAmount , incrementQuantity};
+  let totalAmount = () => {
+    return cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  };
+  return { cart, totalAmount, addToCart, deleteFromCart, incrementQuantity };
 });
 
 interface Suit {

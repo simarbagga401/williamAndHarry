@@ -29,7 +29,7 @@
           v-if="cart.length != 0"
           class="flex items-center justify-between p-3"
         >
-          <p class="font-bold">Total : {{ totalAmount }}</p>
+          <p class="font-bold">Total : {{ totalAmount() }}</p>
           <Button>Checkout</Button>
         </footer>
       </Card>

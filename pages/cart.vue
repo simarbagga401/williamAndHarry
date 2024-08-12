@@ -1,7 +1,7 @@
 <template>
   <section class="flex flex-col items-center w-full h-screen">
     <main class="p-10 flex flex-col items-center justify-evenly w-full h-full">
-      <h1 class="font-bold text-4xl p-10">My Cart</h1>
+      <h1 class="font-bold text-4xl p-10 text-[#07203F]">My Cart</h1>
       <div class="cart-items-container h-1/2">
         <template v-for="(item, i) in cart" :key="i" v-if="cart.length != 0">
           <Card class="flex m-5 card justify-between">

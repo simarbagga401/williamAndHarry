@@ -1,6 +1,6 @@
 <template>
   <main class="p-10 flex flex-col items-center justify-evenly w-full h-screen">
-      <h1 class="font-bold text-4xl p-10">About Us</h1>
+      <h1 class="font-bold text-4xl p-10 text-[#07203F]">About Us</h1>
     <section class="w-full h-3/4 py-2">
       <p>
         Welcome to William & Harry, your premier destination for exceptional

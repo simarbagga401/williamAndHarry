@@ -1,6 +1,6 @@
 <template>
-  <nav class="w-full flex items-center justify-end h-16 bg-whtie">
-    <img src="~/assets/images/logo.png" alt="logo" class="logo" />
+  <nav class="w-full flex items-center justify-end h-16 bg-white">
+    <img src="~/assets/images/logo3.png" alt="logo" class="logo" />
     <img :src="user?.photoURL ?? ''" class="w-10 ml-3 rounded-full" />
     <p class="mx-5">{{ user?.displayName }}</p>
     <NuxtLink to="/" class="mx-5">Shop</NuxtLink>

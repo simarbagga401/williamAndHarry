@@ -75,17 +75,28 @@ import { suits } from "~/products";
 
 let user = useCurrentUser();
 const store = useUserDetailsStore();
+const cart = store.cart;
 
 const handleAddToCart = async () => {
   if (user.value == null) {
     navigateTo("/login");
   }
-  store.addToCart({
-    id: suits[parseInt(id.toString()) - 1].id,
-    name: suits[parseInt(id.toString()) - 1].name,
-    price: suits[parseInt(id.toString()) - 1].price,
-    coatImage: suits[parseInt(id.toString()) - 1].coatImage,
-  });
+
+  if (
+    store.cart
+      .map((item) => item.id)
+      .includes(suits[parseInt(id.toString()) - 1].id) === false
+  ) {
+    store.addToCart({
+      id: suits[parseInt(id.toString()) - 1].id,
+      name: suits[parseInt(id.toString()) - 1].name,
+      price: suits[parseInt(id.toString()) - 1].price,
+      coatImage: suits[parseInt(id.toString()) - 1].coatImage,
+      quantity: 1,
+    });
+  } else {
+    store.incrementQuantity(suits[parseInt(id.toString()) - 1].id);
+  }
 
   toast("Item added to Cart");
 };

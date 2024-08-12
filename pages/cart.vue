@@ -10,9 +10,9 @@
             </CardHeader>
             <CardContent class="p-10 flex flex-col items-start justify-evenly">
               <CardTitle>{{ item.name }}</CardTitle>
-              <CardDescription class="font-bold">{{
-                item.price
-              }}</CardDescription>
+              <CardDescription class="font-bold"
+                >{{ item.price }} X {{ item.quantity }}</CardDescription
+              >
             </CardContent>
             <CardFooter>
               <Button @click="store.deleteFromCart(item.id)">Delete</Button>
@@ -54,11 +54,7 @@ import {
 const user = useCurrentUser();
 const store = useUserDetailsStore();
 const cart = store.cart;
-const totalAmount = ref(cart.reduce((acc, item) => acc + item.price, 0));
-
-watch(cart, () => {
-  totalAmount.value = cart.reduce((acc, item) => acc + item.price, 0);
-});
+const totalAmount = store.totalAmount;
 </script>
 
 <style>

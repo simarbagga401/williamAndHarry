@@ -29,7 +29,8 @@
     "shadcn-vue": "^0.10.5",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
-    "vue": "latest"
+    "vue": "latest",
+    "vue-sonner": "^1.1.4"
   },
   "devDependencies": {
     "typescript": "^5.5.4"

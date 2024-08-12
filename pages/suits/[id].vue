@@ -1,5 +1,6 @@
 <template>
   <main class="flex flex-col items-center h-screen w-screen py-10">
+    <Toaster />
     <section
       class="flex flex-col items-center w-full justify-evenly h-full px-20"
     >
@@ -67,6 +68,8 @@ import {
 import { db } from "~/firebase.js";
 import { collection, doc, updateDoc, setDoc } from "firebase/firestore";
 import { useUserDetailsStore } from "~/store/store";
+import { Toaster } from "@/components/ui/sonner";
+import { toast } from "vue-sonner";
 
 import { suits } from "~/products";
 
@@ -84,6 +87,7 @@ const handleAddToCart = async () => {
     coatImage: suits[parseInt(id.toString()) - 1].coatImage,
   });
 
+  toast("Item added to Cart");
 };
 
 const { id } = useRoute().params;

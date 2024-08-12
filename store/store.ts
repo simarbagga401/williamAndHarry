@@ -5,8 +5,8 @@ export const useUserDetailsStore = defineStore("userDetails", () => {
     cart.push(suit);
   };
 
-  const deleteFromCart = (id: Number) => {
-    let removeIndex = cart.map(item => item.id).indexOf(id)
+  const deleteFromCart = (id: number) => {
+    let removeIndex = cart.map((item) => item.id).indexOf(id);
     cart.splice(removeIndex, 1);
   };
   return { cart, addToCart, deleteFromCart };

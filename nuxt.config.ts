@@ -1,6 +1,16 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
+  app: {
+    pageTransition: { name: "page", mode: "out-in" },
+  },
+  site: {
+    url: "https://williamharry.com",
+    name: "William and Harry",
+    description:
+      " Welcome to William & Harry, your premier destination for exceptional men's formal suits in Mumbai. At William & Harry, we believe that elegance and affordability should go hand in hand.",
+    defaultLocale: "en", // not needed if you have @nuxtjs/i18n installed
+  },
   runtimeConfig: {
     public: {
       ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
@@ -12,6 +22,7 @@ export default defineNuxtConfig({
     "shadcn-nuxt",
     "nuxt-vuefire",
     "@pinia/nuxt",
+    "@nuxtjs/seo",
   ],
 
   shadcn: {

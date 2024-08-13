@@ -64,7 +64,7 @@
       <div
         class="footer-links-container h-full flex w-1/2 justify-center items-center"
       >
-        <NuxtLink to="/shop" class="text-white p-5">Shop</NuxtLink>
+        <NuxtLink to="/" class="text-white p-5">Shop</NuxtLink>
         <NuxtLink to="/aboutUs" class="text-white p-5">About Us</NuxtLink>
         <NuxtLink to="/login" class="text-white p-5">Sign In</NuxtLink>
       </div>

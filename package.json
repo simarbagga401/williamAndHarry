@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@firebase/app-types": "^0.9.2",
+    "@nuxtjs/seo": "^2.0.0-rc.18",
     "@nuxtjs/tailwindcss": "^6.12.1",
     "@pinia/nuxt": "^0.5.3",
     "@vueuse/core": "^10.11.0",

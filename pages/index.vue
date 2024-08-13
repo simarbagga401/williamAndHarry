@@ -156,7 +156,7 @@ img {
   padding: 5px;
   background-color: white;
   margin: 10px;
-  border-radius: 10px;
+  border-radius: 4px;
 }
 
 @media (max-width: 768px) {

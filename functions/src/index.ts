@@ -2,17 +2,18 @@ const admin = require("firebase-admin");
 const express = require("express");
 const cors = require("cors");
 const Razorpay = require("razorpay");
+const functions = require("firebase-functions");
 import type { Request, Response, NextFunction } from "express";
 
 admin.initializeApp();
 const router = express();
-router.use(cors({ origin: true }));
+router.use(cors({ origin: "*" }));
 
 // Add your razorpay key and secret
 const KEY_ID = process.env.RAZORPAY_KEY_ID;
 const KEY_SECRET = process.env.RAZORPAY_KEY_SECRET;
 
-export const createPayment = router.post(
+router.post(
   "/createPayment",
   (req: Request, res: Response, next: NextFunction) => {
     return admin
@@ -26,7 +27,7 @@ export const createPayment = router.post(
         });
 
         var options = {
-          amount: req.body.amount,
+          amount: req.body.amount * 100,
           currency: "INR",
           receipt: payment.id,
           payment_capture: 1,
@@ -39,4 +40,15 @@ export const createPayment = router.post(
         return res.status(400).send({ er });
       });
   }
+);
+
+exports.api = functions.https.onRequest(
+  {
+    cors: [
+      "http://localhost:3000",
+      "https://williamharry.com",
+      /williamharry\.com$/,
+    ],
+  },
+  router
 );

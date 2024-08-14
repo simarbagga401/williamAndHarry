@@ -3,17 +3,21 @@
     <section
       class="hero-section flex flex-col items-center justify-center w-full"
     >
-      <h1 class="font-bold text-6xl text-white p-10">Premium Suits</h1>
-      <p
-        class="text-2xl p-2 text-[#07203F] justify-self-center bg-slate-50 font-[roller-coaster]"
+      <h1
+        class="font-bold text-6xl text-white p-3 m-5 mx-16 bg-[#07203F] "
       >
+        Premium Suits
+      </h1>
+      <p class="text-2xl p-2 text-[#07203F] justify-self-center bg-slate-50">
         Choose from a wide range of suits for every occasion.
       </p>
     </section>
     <section class="suits-container h-full">
       <Card v-for="(suit, i) in suits" :key="i" class="m-10 card max-h-[600px]">
         <CardHeader>
-          <CardTitle class="text-[#07203F]">{{ suit.name }}</CardTitle>
+          <CardTitle class="text-[#07203F] ">
+            {{ suit.name }}</CardTitle
+          >
           <CardDescription>{{ suit.description }}</CardDescription>
         </CardHeader>
         <CardContent>
@@ -135,7 +139,7 @@ img {
 
 .hero-section {
   height: 80vh;
-  background-image: url("~/assets/images/hero-bg.jpg");
+  background-image: url("~/assets/images/coats.jpg");
   background-size: cover;
 }
 
@@ -169,10 +173,10 @@ img {
     align-items: center;
   }
   .footer-links-container {
-    width:100%;
+    width: 100%;
   }
   .footer-social-media-container {
-    width:100%;
+    width: 100%;
   }
 }
 </style>

@@ -30,7 +30,7 @@
           class="flex items-center justify-between p-3"
         >
           <p class="font-bold">Total : {{ totalAmount() }}</p>
-          <Button>Checkout</Button>
+          <Button @click="navigateTo('/checkout')">Checkout</Button>
         </footer>
       </Card>
     </main>
@@ -69,7 +69,7 @@ const totalAmount = store.totalAmount;
 @media (max-width: 768px) {
   .card {
     flex-direction: column;
-    height: 400px;
+    height: 350px;
   }
 }
 </style>

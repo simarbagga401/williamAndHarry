@@ -1,7 +1,9 @@
 <template>
-  <section class="flex flex-col items-center justify-evenly p-2 py-10">
+  <section
+    class="flex flex-col items-center justify-evenly p-2 py-10 absolute w-full h-full"
+  >
     <Card class="w-1/2 p-5 min-w-[320px] max-w-2xl">
-      <form>
+      <form @submit="handlePayment">
         <FormField name="name" v-slot="{ componentField }">
           <FormItem class="m-2">
             <FormLabel>Personal Details</FormLabel>
@@ -75,6 +77,11 @@
           </FormItem>
         </FormField>
         <Button type="submit" class="m-2">Pay</Button>
+        <Button
+          class="m-2 bg-red-500 hover:bg-red-400"
+          @click="$emit('closeCheckoutForm')"
+          >Close</Button
+        >
       </form>
     </Card>
   </section>
@@ -84,6 +91,7 @@
 import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import * as z from "zod";
+import logo from "~/assets/images/logo.png";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -96,6 +104,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import zipcodes from "zipcodes";
+import { useUserDetailsStore } from "~/store/store";
+const store = useUserDetailsStore();
 
 const formSchema = toTypedSchema(
   z.object({
@@ -108,14 +118,15 @@ const formSchema = toTypedSchema(
     state: z.string().min(2).max(50),
   })
 );
-const district = ref("");
-const state = ref("");
+const district = ref(null);
+const state = ref(null);
+const user = useCurrentUser();
 
 const getCityState = async () => {
-  const fetchCity = (
+  const fetchCityState = (
     await fetch(`https://api.postalpincode.in/pincode/${form.values.pincode}`)
   ).json();
-  const fetchedCity = await fetchCity;
+  const fetchedCity = await fetchCityState;
 
   district.value = fetchedCity[0].PostOffice[0].District;
   state.value = fetchedCity[0].PostOffice[0].State;
@@ -124,6 +135,73 @@ const getCityState = async () => {
 const form = useForm({
   validationSchema: formSchema,
 });
+
+const handlePayment = async (e) => {
+  e.preventDefault();
+  if (
+    !form.values.name ||
+    !form.values.mobileNo ||
+    !form.values.pincode ||
+    !form.values.address ||
+    !form.values.town ||
+    state.value == null ||
+    district.value == null
+  ) {
+    return alert("Some Order Details are missing!");
+  }
+  const data = {
+    amount: store.totalAmount,
+    name: form.values.name,
+    email: user.value?.email,
+    mobileNo: form.values.mobileNo,
+    pincode: form.values.pincode,
+    address: form.values.address,
+    town: form.values.town,
+    district: district.value,
+    state: state.value,
+  };
+
+  fetch(
+    "https://us-central1-williamandharry-9288e.cloudfunctions.net/api/createPayment",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }
+  )
+    .then((res: any) => {
+      console.log(res);
+      let order = res.data;
+      var options = {
+        key: process.env.RAZORPAY_KEY_ID,
+        amount: order.amount_due,
+        name: "William and Harry",
+        image: logo,
+        currency: order.currency,
+        description: "Thank you for shopping with us",
+        order_id: order.id,
+        prefill: {
+          name: data.name,
+          email: data.email,
+          contact: data.mobileNo,
+        },
+        theme: {
+          color: "#000000", // Set your website theme color
+        },
+        handler: (response: any) => {
+          console.log("payment successful", response);
+        },
+      };
+
+      var rzp = new Razorpay(options);
+      rzp.open();
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
 </script>
 
 <style scoped></style>

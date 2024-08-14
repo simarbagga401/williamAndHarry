@@ -1,6 +1,9 @@
 <template>
   <section class="flex flex-col items-center w-full h-screen">
-    <main class="p-10 flex flex-col items-center justify-evenly w-full h-full">
+    <main
+      class="p-10 flex flex-col items-center justify-evenly w-full h-full"
+      :class="{ blur: openCheckoutForm }"
+    >
       <h1 class="font-bold text-4xl p-10 text-[#07203F]">My Cart</h1>
       <div class="cart-items-container h-1/2">
         <template v-for="(item, i) in cart" :key="i" v-if="cart.length != 0">
@@ -30,10 +33,14 @@
           class="flex items-center justify-between p-3"
         >
           <p class="font-bold">Total : {{ totalAmount() }}</p>
-          <Button @click="navigateTo('/checkout')">Checkout</Button>
+          <Button @click="openCheckoutForm = true">Checkout</Button>
         </footer>
       </Card>
     </main>
+    <CheckoutForm
+      v-if="openCheckoutForm"
+      @closeCheckoutForm="openCheckoutForm = false"
+    />
   </section>
 </template>
 
@@ -51,6 +58,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+const openCheckoutForm = ref(false);
 const user = useCurrentUser();
 const store = useUserDetailsStore();
 const cart = store.cart;
@@ -64,6 +72,11 @@ const totalAmount = store.totalAmount;
 
 .cart-items-container {
   overflow: auto;
+}
+
+.blur {
+  filter: blur(5px);
+  background: rgb(227, 227, 227);
 }
 
 @media (max-width: 768px) {

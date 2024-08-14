@@ -3,6 +3,9 @@ export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   app: {
     pageTransition: { name: "page", mode: "out-in" },
+    head: {
+      script: [{ src: "https://checkout.razorpay.com/v1/checkout.js" }],
+    },
   },
   site: {
     url: "https://williamharry.com",

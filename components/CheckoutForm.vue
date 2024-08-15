@@ -88,10 +88,15 @@
 </template>
 
 <script setup lang="ts">
+import axios from "axios";
 import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import * as z from "zod";
 import logo from "~/assets/images/logo.png";
+
+import { db } from "~/firebase.js";
+import { doc, collection, setDoc } from "firebase/firestore";
+import type { DocumentData } from "firebase/firestore"; // Import the DocumentData type
 
 import { Button } from "@/components/ui/button";
 import {
@@ -105,8 +110,8 @@ import {
 import { Input } from "@/components/ui/input";
 import zipcodes from "zipcodes";
 import { useUserDetailsStore } from "~/store/store";
-import Razorpay from "razorpay";
 const store = useUserDetailsStore();
+const runtimeconfig = useRuntimeConfig();
 
 const formSchema = toTypedSchema(
   z.object({
@@ -122,7 +127,6 @@ const formSchema = toTypedSchema(
 const district = ref(null);
 const state = ref(null);
 const user = useCurrentUser();
-const runtimeConfig = useRuntimeConfig();
 
 const getCityState = async () => {
   const fetchCityState = (
@@ -140,107 +144,82 @@ const form = useForm({
 
 const handlePayment = async (e: any) => {
   e.preventDefault();
-  fetch(
-    "https://us-central1-williamandharry-9288e.cloudfunctions.net/api/test",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ amount: store.totalAmount }),
-    }
-  )
-    .then((res) => {
+  if (
+    !form.values.name ||
+    !form.values.mobileNo ||
+    !form.values.pincode ||
+    !form.values.address ||
+    !form.values.town ||
+    state.value == null ||
+    district.value == null
+  ) {
+    return alert("Some Order Details are missing!");
+  }
+  const data = {
+    amount: store.totalAmount(),
+    name: form.values.name,
+    id: user.value?.uid,
+    email: user.value?.email,
+    mobileNo: form.values.mobileNo,
+    pincode: form.values.pincode,
+    address: form.values.address,
+    town: form.values.town,
+    district: district.value,
+    state: state.value,
+    products: store.cart.map((item) => {
+      return {
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+      };
+    }),
+  };
+
+  axios
+    .post(
+      "https://us-central1-williamandharry-9288e.cloudfunctions.net/api/createPayment",
+      data
+    )
+    .then((res: any) => {
       console.log(res);
+      let order = res.data.order;
+      var options = {
+        key: runtimeconfig.public.RAZORPAY_KEY_ID,
+        amount: order.amount_due,
+        name: "William and Harry",
+        image: logo,
+        currency: order.currency,
+        description: "Thank you for shopping with us",
+        order_id: order.id,
+        prefill: {
+          name: data.name,
+          email: data.email,
+          contact: data.mobileNo,
+        },
+        theme: {
+          color: "#000000", // Set your website theme color
+        },
+        handler: (response: any) => {
+          setDoc(doc(db, "orders", user.value?.uid ?? ''), {
+            ...data,
+            paymentId: response.razorpay_payment_id,
+            orderId: response.razorpay_order_id,
+            signature: response.razorpay_signature,
+            delivery: "Pending",
+          });
+          store.cart = [];
+          navigateTo("/myOrders");
+        },
+      };
+
+      console.log(options);
+      var rzp = new Razorpay(options);
+      rzp.open();
     })
     .catch((err) => {
       console.error(err);
     });
-
-  // if (
-  //   !form.values.name ||
-  //   !form.values.mobileNo ||
-  //   !form.values.pincode ||
-  //   !form.values.address ||
-  //   !form.values.town ||
-  //   state.value == null ||
-  //   district.value == null
-  // ) {
-  //   return alert("Some Order Details are missing!");
-  // }
-  // const data = {
-  //   amount: store.totalAmount,
-  //   name: form.values.name,
-  //   email: user.value?.email,
-  //   mobileNo: form.values.mobileNo,
-  //   pincode: form.values.pincode,
-  //   address: form.values.address,
-  //   town: form.values.town,
-  //   district: district.value,
-  //   state: state.value,
-  // };
-  //  var options = {
-  //       key: 'rzp_test_3oTGnK8huvIVkw',
-  //       amount: '500',
-  //       name: "William and Harry",
-  //       image: logo,
-  //       currency: "INR",
-  //       description: "Thank you for shopping with us",
-  //       prefill: {
-  //         name: data.name,
-  //         email: data.email,
-  //         contact: data.mobileNo,
-  //       },
-  //       theme: {
-  //         color: "#000000", // Set your website theme color
-  //       },
-  //       handler: (response: any) => {
-  //         console.log("payment successful", response);
-  //       },
-  //     };
-  //     var rzp = new Razorpay(options);
-  //     rzp.open();
-
-  // fetch(
-  //   "https://us-central1-williamandharry-9288e.cloudfunctions.net/api/createPayment",
-  //   {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(data),
-  //   }
-  // )
-  //   .then((res: any) => {
-  //     console.log(res);
-  //     let order = res.data;
-  //     var options = {
-  //       key: process.env.RAZORPAY_KEY_ID,
-  //       amount: order.amount_due,
-  //       name: "William and Harry",
-  //       image: logo,
-  //       currency: order.currency,
-  //       description: "Thank you for shopping with us",
-  //       order_id: order.id,
-  //       prefill: {
-  //         name: data.name,
-  //         email: data.email,
-  //         contact: data.mobileNo,
-  //       },
-  //       theme: {
-  //         color: "#000000", // Set your website theme color
-  //       },
-  //       handler: (response: any) => {
-  //         console.log("payment successful", response);
-  //       },
-  //     };
-
-  //     var rzp = new Razorpay(options);
-  //     rzp.open();
-  //   })
-  //   .catch((err) => {
-  //     console.error(err);
-  //   });
 };
 </script>
 

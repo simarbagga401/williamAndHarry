@@ -2,9 +2,11 @@
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   runtimeConfig: {
-    ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
-    RAZORPAY_KEY_ID: process.env.RAZORPAY_KEY_ID,
-    RAZORPAY_KEY_SECRET: process.env.RAZORPAY_KEY_SECRET,
+    public: {
+      ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
+      RAZORPAY_KEY_ID: process.env.RAZORPAY_KEY_ID,
+      RAZORPAY_KEY_SECRET: process.env.RAZORPAY_KEY_SECRET,
+    },
   },
   app: {
     pageTransition: { name: "page", mode: "out-in" },

@@ -6,33 +6,33 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
+} from "@/components/ui/card";
 
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 const input = ref();
-const isAdmin = ref(false)
+const isAdmin = ref(false);
 const runtimeConfig = useRuntimeConfig();
-const adminPassword = runtimeConfig.public.ADMIN_PASSWORD
+const adminPassword = runtimeConfig.public.ADMIN_PASSWORD;
 
 const handleSubmit = () => {
-  input.value == adminPassword ? isAdmin.value = true : isAdmin.value = false;
-}
+  input.value == adminPassword
+    ? (isAdmin.value = true)
+    : (isAdmin.value = false);
+};
 </script>
 
 <template>
   <section class="h-screen w-screen flex items-center justify-center">
-    <Card v-if="!isAdmin" >
+    <Card v-if="!isAdmin">
       <CardHeader>
         <CardTitle>Enter Password</CardTitle>
       </CardHeader>
       <CardContent>
         <div class="flex w-full max-w-sm items-center gap-1.5">
-          <Input  type="password" placeholder="Enter Password" v-model="input"/>
-          <Button type="submit" @click="handleSubmit">
-            Submit
-          </Button>
+          <Input type="password" placeholder="Enter Password" v-model="input" />
+          <Button type="submit" @click="handleSubmit"> Submit </Button>
         </div>
       </CardContent>
     </Card>
@@ -40,7 +40,6 @@ const handleSubmit = () => {
       <h1>welcome to admin page</h1>
     </div>
   </section>
-
 </template>
 
 <style scoped></style>

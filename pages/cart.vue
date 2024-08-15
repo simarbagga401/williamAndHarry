@@ -45,9 +45,6 @@
 </template>
 
 <script setup lang="ts">
-import { db } from "~/firebase.js";
-import { doc, collection } from "firebase/firestore";
-import type { DocumentData } from "firebase/firestore"; // Import the DocumentData type
 import { useUserDetailsStore } from "~/store/store";
 import {
   Card,

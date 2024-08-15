@@ -28,7 +28,6 @@
     "nuxt-vuefire": "^1.0.3",
     "pinia": "^2.2.1",
     "radix-vue": "^1.9.3",
-    "razorpay": "^2.9.4",
     "shadcn-nuxt": "^0.10.4",
     "shadcn-vue": "^0.10.5",
     "tailwind-merge": "^2.4.0",

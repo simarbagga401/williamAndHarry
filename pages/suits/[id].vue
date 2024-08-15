@@ -65,8 +65,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { db } from "~/firebase.js";
-import { collection, doc, updateDoc, setDoc } from "firebase/firestore";
 import { useUserDetailsStore } from "~/store/store";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "vue-sonner";

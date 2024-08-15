@@ -7,9 +7,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { db } from "~/firebase.js";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { collection, doc, setDoc } from "firebase/firestore";
 
 const input = ref();
 const isAdmin = ref(false);
@@ -20,6 +22,35 @@ const handleSubmit = () => {
   input.value == adminPassword
     ? (isAdmin.value = true)
     : (isAdmin.value = false);
+};
+
+const orders = useCollection(collection(db, "orders"));
+
+function getKeyByValue(
+  object: { [key: string]: string | number },
+  value: string | number
+) {
+  return Object.keys(object).find((key) => object[key] === value);
+}
+
+const changeOrderDeliveryStatus = (orderId:string) => {
+  const order = useDocument(
+    doc(collection(db, "orders"), orderId)
+  ).data.value;
+  console.log(order)
+
+  // if(order?.delivery == "Pending"){
+  //   setDoc(doc(collection(db, "orders"), orderId), {
+  //     ...order,
+  //     delivery: "Delivered",
+  //   });
+  // }else{
+  //   setDoc(doc(collection(db, "orders"), orderId), {
+  //     ...order,
+  //     delivery: "Pending",
+  //   });
+  // }
+
 };
 </script>
 
@@ -36,10 +67,30 @@ const handleSubmit = () => {
         </div>
       </CardContent>
     </Card>
-    <div v-else>
-      <h1>welcome to admin page</h1>
+    <div v-else class="w-full h-full">
+      <Card
+        v-for="(order, i) in orders"
+        :key="i"
+        class="order-container flex p-10 m-10"
+      >
+        <div class="values-container m-5">
+          <p v-for="(el, j) in order" :key="j" class="m-2">
+            {{ getKeyByValue(order, el) }} :
+            {{ el }}
+          </p>
+        </div>
+        <Button @click="changeOrderDeliveryStatus(order.orderId)">{{
+          order.delivery == "Pending"
+            ? "Order Delivered"
+            : "Order Not Delivered"
+        }}</Button>
+      </Card>
     </div>
   </section>
 </template>
 
-<style scoped></style>
+<style scoped>
+.order-container {
+  width: clamp(300px, 100%, 1000px);
+}
+</style>

@@ -142,6 +142,13 @@ const form = useForm({
   validationSchema: formSchema,
 });
 
+const userDocument = useDocument(doc(collection(db, "users"), user.value?.uid));
+let prevOrders = ref(null);
+if (userDocument.data.value?.orders != null) {
+  const { ...orders } = userDocument.data.value.orders;
+  prevOrders.value = orders;
+}
+
 const handlePayment = async (e: any) => {
   e.preventDefault();
   if (
@@ -201,12 +208,23 @@ const handlePayment = async (e: any) => {
           color: "#000000", // Set your website theme color
         },
         handler: (response: any) => {
-          setDoc(doc(db, "orders", user.value?.uid ?? ''), {
+          setDoc(doc(db, "orders", order.id), {
             ...data,
             paymentId: response.razorpay_payment_id,
             orderId: response.razorpay_order_id,
             signature: response.razorpay_signature,
             delivery: "Pending",
+          });
+
+          setDoc(doc(db, "users", user.value?.uid ?? ""), {
+            orders: [
+              prevOrders.value,
+              {
+                orderId: response.razorpay_order_id,
+                products: data.products,
+                delivery: "Pending",
+              },
+            ],
           });
           store.cart = [];
           navigateTo("/myOrders");

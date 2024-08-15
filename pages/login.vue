@@ -1,13 +1,25 @@
 <script setup lang="ts">
 import { Button } from "@/components/ui/button";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { collection, doc, setDoc } from "firebase/firestore";
+import { db } from "~/firebase";
 
 const auth = useFirebaseAuth();
 const router = useRouter();
+const user = useCurrentUser();
 
 const signInwithGoogle = () => {
   if (auth)
-    signInWithPopup(auth, new GoogleAuthProvider()).then(() => {
+    signInWithPopup(auth, new GoogleAuthProvider()).then(async () => {
+      const fetchUser = await useDocument(
+        doc(collection(db, "users"), user.value?.uid)
+      );
+      if (fetchUser.value == null) {
+        const userRef = await doc(collection(db, "users"), user.value?.uid);
+        await setDoc(userRef, {
+          orders: [],
+        });
+      }
       router.replace("/");
     });
 };

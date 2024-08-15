@@ -13,6 +13,10 @@ router.use(cors({ origin: "*" }));
 const KEY_ID = process.env.RAZORPAY_KEY_ID;
 const KEY_SECRET = process.env.RAZORPAY_KEY_SECRET;
 
+router.post("/test", (req: Request, res: Response, next: NextFunction) => {
+  res.send({ msg: "Hello from Firebase", data: req.body });
+});
+
 router.post(
   "/createPayment",
   (req: Request, res: Response, next: NextFunction) => {
@@ -45,7 +49,7 @@ router.post(
 exports.api = functions.https.onRequest(
   {
     cors: [
-      "http://localhost:3000",
+      "http://localhost:3000/cart",
       "https://williamharry.com",
       /williamharry\.com$/,
     ],

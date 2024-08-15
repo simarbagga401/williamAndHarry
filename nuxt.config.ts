@@ -1,6 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
+  runtimeConfig: {
+    ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
+    RAZORPAY_KEY_ID: process.env.RAZORPAY_KEY_ID,
+    RAZORPAY_KEY_SECRET: process.env.RAZORPAY_KEY_SECRET,
+  },
   app: {
     pageTransition: { name: "page", mode: "out-in" },
     head: {
@@ -13,11 +18,6 @@ export default defineNuxtConfig({
     description:
       " Welcome to William & Harry, your premier destination for exceptional men's formal suits in Mumbai. At William & Harry, we believe that elegance and affordability should go hand in hand.",
     defaultLocale: "en", // not needed if you have @nuxtjs/i18n installed
-  },
-  runtimeConfig: {
-    public: {
-      ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
-    },
   },
   devtools: { enabled: true },
   modules: [

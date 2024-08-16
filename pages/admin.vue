@@ -25,11 +25,12 @@ const handleSubmit = () => {
     : (isAdmin.value = false);
 };
 
-const {data, promise} = useCollection(collection(db, "orders"));
-const orders = ref();
-promise.value.then((orders:any) => {
- orders.value = orders;
+const { data, promise } = useCollection(collection(db, "orders"));
+const orders = ref([]);
+promise.value.then((o: any) => {
+  orders.value = o;
 });
+
 
 function getKeyByValue(
   object: { [key: string]: string | number },
@@ -38,21 +39,25 @@ function getKeyByValue(
   return Object.keys(object).find((key) => object[key] === value);
 }
 
-const changeOrderDeliveryStatus = (orderId:string) => {
-  const {data,promise}= useDocument(
+const changeOrderDeliveryStatus = (orderId: string) => {
+  const { data, promise } = useDocument(
     doc(collection(db, "orders"), orderId)
   );
-  
-promise.value.then((order:any) => {
-console.log(order.orderId)
-});
 
-  // }else{
-  //   setDoc(doc(collection(db, "orders"), orderId), {
-  //     ...order,
-  //     delivery: "Pending",
-  //   });
-  // }
+  promise.value.then((order: any) => {
+
+    if(order.delivery == 'Pending'){
+      setDoc(doc(collection(db, "orders"), orderId), {
+        ...order,
+        delivery: "Delivered",
+      });
+    }else{
+      setDoc(doc(collection(db, "orders"), orderId), {
+        ...order,
+        delivery: "Pending",
+      });
+    }
+  });
 
 };
 </script>
@@ -71,14 +76,10 @@ console.log(order.orderId)
       </CardContent>
     </Card>
     <div v-else class="w-full h-full">
-      <Card
-        v-for="(order, i) in orders"
-        :key="i"
-        class="order-container flex p-10 m-10"
-      >
+      <Card v-for="(order, i) in orders" :key="i" class="order-container flex p-10 m-10">
         <div class="values-container m-5">
           <p v-for="(el, j) in order" :key="j" class="m-2">
-            {{ getKeyByValue(order, el) }} :
+            {{ j }} : 
             {{ el }}
           </p>
         </div>

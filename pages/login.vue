@@ -11,19 +11,16 @@ const user = useCurrentUser();
 const signInwithGoogle = () => {
   if (auth)
     signInWithPopup(auth, new GoogleAuthProvider()).then(async () => {
-      const { data, promise } = useDocument(
+      const fetchUser = await useDocument(
         doc(collection(db, "users"), user.value?.uid)
       );
-      promise.value.then((fetchUser: any) => {
-        if (fetchUser.value == null) {
-          const userRef = doc(collection(db, "users"), user.value?.uid);
-          setDoc(userRef, {
-            orders: [],
-          });
-        }
-        router.replace("/");
-      });
-
+      if (fetchUser.value == null) {
+        const userRef = await doc(collection(db, "users"), user.value?.uid);
+        await setDoc(userRef, {
+          orders: [],
+        });
+      }
+      router.replace("/");
     });
 };
 </script>

@@ -165,7 +165,7 @@ const handlePayment = async (e: any) => {
   const data = {
     amount: store.totalAmount(),
     name: form.values.name,
-    id: user.value?.uid,
+    userId: user.value?.uid,
     email: user.value?.email,
     mobileNo: form.values.mobileNo,
     pincode: form.values.pincode,

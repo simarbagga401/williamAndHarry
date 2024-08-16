@@ -45,18 +45,48 @@ const changeOrderDeliveryStatus = (orderId: string) => {
   );
 
   promise.value.then((order: any) => {
+    const { data, promise } = useDocument(doc(collection(db, "users"), order.userId));
+    promise.value.then(user => {
 
-    if(order.delivery == 'Pending'){
-      setDoc(doc(collection(db, "orders"), orderId), {
-        ...order,
-        delivery: "Delivered",
-      });
-    }else{
-      setDoc(doc(collection(db, "orders"), orderId), {
-        ...order,
-        delivery: "Pending",
-      });
-    }
+      if (order.delivery == 'Pending') {
+        setDoc(doc(collection(db, "orders"), orderId), {
+          ...order,
+          delivery: "Delivered",
+        });
+        const updatedOrders = user?.orders.map((o: any) => {
+          if (o.orderId == orderId) {
+            return {
+              ...o,
+              delivery: "Delivered",
+            };
+          }
+          return o;
+        });
+        setDoc(doc(collection(db, "users"), order.userId), {
+          ...user,
+          orders: updatedOrders
+        });
+      } else {
+        const updatedOrders = user?.orders.map((o: any) => {
+          if (o.orderId == orderId) {
+            return {
+              ...o,
+              delivery: "Pending",
+            };
+          }
+          return o;
+        });
+        setDoc(doc(collection(db, "orders"), orderId), {
+          ...order,
+          delivery: "Pending",
+        });
+        setDoc(doc(collection(db, "users"), order.userId), {
+          ...user,
+          orders: updatedOrders
+        });
+      }
+    })
+
   });
 
 };
@@ -79,7 +109,7 @@ const changeOrderDeliveryStatus = (orderId: string) => {
       <Card v-for="(order, i) in orders" :key="i" class="order-container flex p-10 m-10">
         <div class="values-container m-5">
           <p v-for="(el, j) in order" :key="j" class="m-2">
-            {{ j }} : 
+            {{ j }} :
             {{ el }}
           </p>
         </div>

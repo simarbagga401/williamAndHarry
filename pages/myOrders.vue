@@ -7,7 +7,7 @@
       </p>
       <Card v-else>
         <div v-for="(order, i) in myOrders" :key="i">
-          <div v-if="order">
+          <div v-if="order.orderId">
             <CardHeader>
             <CardTitle>Order ID: {{ order.orderId }}</CardTitle>
           </CardHeader>

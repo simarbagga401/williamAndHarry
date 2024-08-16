@@ -17,7 +17,7 @@ const signInwithGoogle = () => {
       if (fetchUser.value == null) {
         const userRef = await doc(collection(db, "users"), user.value?.uid);
         await setDoc(userRef, {
-          orders: [],
+          name: user.value?.displayName,
         });
       }
       router.replace("/");

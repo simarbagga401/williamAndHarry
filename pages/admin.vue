@@ -54,7 +54,7 @@ const changeOrderDeliveryStatus = (orderId: string) => {
           delivery: "Delivered",
         });
         const updatedOrders = user?.orders.map((o: any) => {
-          if (o.orderId == orderId) {
+          if (o && o.orderId == orderId) {
             return {
               ...o,
               delivery: "Delivered",
@@ -64,11 +64,11 @@ const changeOrderDeliveryStatus = (orderId: string) => {
         });
         setDoc(doc(collection(db, "users"), order.userId), {
           ...user,
-          orders: updatedOrders
+          orders: updatedOrders,
         });
       } else {
         const updatedOrders = user?.orders.map((o: any) => {
-          if (o.orderId == orderId) {
+          if (o && o.orderId == orderId) {
             return {
               ...o,
               delivery: "Pending",

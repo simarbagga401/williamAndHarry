@@ -95,7 +95,7 @@ import * as z from "zod";
 import logo from "~/assets/images/logo.png";
 
 import { db } from "~/firebase.js";
-import { doc, collection, setDoc } from "firebase/firestore";
+import { doc, collection, setDoc, getDoc } from "firebase/firestore";
 import type { DocumentData } from "firebase/firestore"; // Import the DocumentData type
 
 import { Button } from "@/components/ui/button";
@@ -142,12 +142,12 @@ const form = useForm({
   validationSchema: formSchema,
 });
 
-const userDocument = useDocument(doc(collection(db, "users"), user.value?.uid));
-let prevOrders = ref(null);
-if (userDocument.data.value?.orders != null) {
-  const { ...orders } = userDocument.data.value.orders;
-  prevOrders.value = orders;
-}
+const { data, promise } = useDocument(
+  doc(collection(db, "users"), user.value?.uid)
+);
+
+const userDetails = await getDoc(doc(db, "users", user.value?.uid));
+let prevOrders = userDetails.data()?.orders;
 
 
 const handlePayment = async (e: any) => {
@@ -217,15 +217,17 @@ const handlePayment = async (e: any) => {
             delivery: "Pending",
           });
 
+          const allOrders = [
+            ...prevOrders,
+            {
+              orderId: response.razorpay_order_id,
+              products: data.products,
+              delivery: "Pending",
+            },
+          ];
+
           setDoc(doc(db, "users", user.value?.uid ?? ""), {
-            orders: [
-              prevOrders.value,
-              {
-                orderId: response.razorpay_order_id,
-                products: data.products,
-                delivery: "Pending",
-              },
-            ],
+            orders: allOrders,
           });
           store.cart = [];
           navigateTo("/myOrders");

@@ -5,32 +5,33 @@
       <p class="font-medium text-2xl p-10" v-if="myOrders == null">
         No Orders to Track
       </p>
-      <Card v-else>
+      <section v-else>
         <div v-for="(order, i) in myOrders" :key="i">
           <div v-if="order">
-            <CardHeader>
-            <CardTitle>Order ID: {{ order.orderId }}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <template v-for="(product, i) in order.products" :key="i">
-              <p>{{ product.name }} x {{ product.quantity }}</p>
-              <p>₹{{ product.price }}</p>
-            </template>
-          </CardContent>
-          <CardFooter>
-            <p>Delivery Status: {{ order.delivery }}</p>
-          </CardFooter>
+            <Card class="m-2" >
+              <CardHeader>
+                <CardTitle>Order ID: {{ order.orderId }}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <template v-for="(product, i) in order.products" :key="i">
+                  <p>{{ product.name }} x {{ product.quantity }}</p>
+                  <p>₹{{ product.price }}</p>
+                </template>
+              </CardContent>
+              <CardFooter>
+                <p>Delivery Status: {{ order.delivery }}</p>
+              </CardFooter>
+            </Card>
           </div>
-         
         </div>
-      </Card>
+      </section>
       <Button @click="navigateTo('/')" v-if="myOrders == null">Shop</Button>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { collection, doc } from "firebase/firestore";
+import { collection, doc, getDoc } from "firebase/firestore";
 import { db } from "~/firebase";
 import {
   Card,
@@ -45,15 +46,13 @@ const user = useCurrentUser();
 const myOrders = ref(null);
 
 setTimeout(() => {
-  const { data, promise } = useDocument(
-    doc(collection(db, "users"), user.value?.uid)
-  );
-
-  promise.value.then((user: any) => {
-    myOrders.value = user.orders
-    console.log(myOrders.value)
+  getDoc(doc(db, "users", user.value?.uid)).then((doc) => {
+    if (doc.exists()) {
+      myOrders.value = doc.data().orders;
+    }
   });
-},500)
+  console.log(myOrders.value);
+}, 500);
 </script>
 
 <style scoped></style>

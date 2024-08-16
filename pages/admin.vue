@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { db } from "~/firebase.js";
+import axios from "axios";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -15,14 +16,17 @@ import { collection, doc, setDoc } from "firebase/firestore";
 import type { DocumentData } from "firebase-admin/firestore";
 
 const input = ref();
-const isAdmin = ref(false);
-const runtimeConfig = useRuntimeConfig();
-const adminPassword = runtimeConfig.public.ADMIN_PASSWORD;
+const isAdmin: Ref<any> = ref(false);
 
-const handleSubmit = () => {
-  input.value == adminPassword
-    ? (isAdmin.value = true)
-    : (isAdmin.value = false);
+const handleSubmit = async () => {
+  const axiosReq = await axios.post(
+    "https://us-central1-williamandharry-9288e.cloudfunctions.net/api/checkIfAdmin",
+    {
+      adminPassword: input.value,
+    }
+  );
+  isAdmin.value = axiosReq.data;
+  console.log(isAdmin.value);
 };
 
 const { data, promise } = useCollection(collection(db, "orders"));
@@ -30,7 +34,6 @@ const orders = ref([]);
 promise.value.then((o: any) => {
   orders.value = o;
 });
-
 
 function getKeyByValue(
   object: { [key: string]: string | number },
@@ -40,15 +43,14 @@ function getKeyByValue(
 }
 
 const changeOrderDeliveryStatus = (orderId: string) => {
-  const { data, promise } = useDocument(
-    doc(collection(db, "orders"), orderId)
-  );
+  const { data, promise } = useDocument(doc(collection(db, "orders"), orderId));
 
   promise.value.then((order: any) => {
-    const { data, promise } = useDocument(doc(collection(db, "users"), order.userId));
-    promise.value.then(user => {
-
-      if (order.delivery == 'Pending') {
+    const { data, promise } = useDocument(
+      doc(collection(db, "users"), order.userId)
+    );
+    promise.value.then((user) => {
+      if (order.delivery == "Pending") {
         setDoc(doc(collection(db, "orders"), orderId), {
           ...order,
           delivery: "Delivered",
@@ -82,13 +84,11 @@ const changeOrderDeliveryStatus = (orderId: string) => {
         });
         setDoc(doc(collection(db, "users"), order.userId), {
           ...user,
-          orders: updatedOrders
+          orders: updatedOrders,
         });
       }
-    })
-
+    });
   });
-
 };
 </script>
 
@@ -106,7 +106,11 @@ const changeOrderDeliveryStatus = (orderId: string) => {
       </CardContent>
     </Card>
     <div v-else class="w-full h-full">
-      <Card v-for="(order, i) in orders" :key="i" class="order-container flex p-10 m-10">
+      <Card
+        v-for="(order, i) in orders"
+        :key="i"
+        class="order-container flex p-10 m-10"
+      >
         <div class="values-container m-5">
           <p v-for="(el, j) in order" :key="j" class="m-2">
             {{ j }} :

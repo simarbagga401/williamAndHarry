@@ -1,5 +1,6 @@
 const admin = require("firebase-admin");
 const express = require("express");
+// const cors = require("cors")({ origin: ['http://localhost:3000','https://williamharry.com'] });
 const cors = require("cors")({ origin: true });
 const Razorpay = require("razorpay");
 import type { Request, Response, NextFunction } from "express";
@@ -12,6 +13,10 @@ router.use(cors);
 // Add your razorpay key and secret
 const KEY_ID = process.env.RAZORPAY_KEY_ID;
 const KEY_SECRET = process.env.RAZORPAY_KEY_SECRET;
+
+router.post("/checkIfAdmin", (req: Request, res: Response) => {
+  res.send(req.body.adminPassword == process.env.ADMIN_PASSWORD ? true : false);
+});
 
 router.post(
   "/createPayment",
@@ -42,4 +47,5 @@ router.post(
   }
 );
 
+// exports.api = onRequest({ cors: [/williamharry\.com$/, "williamharry.com",'localhost:3000'] }, router);
 exports.api = onRequest({ cors: true }, router);

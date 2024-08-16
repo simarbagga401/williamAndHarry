@@ -149,6 +149,7 @@ if (userDocument.data.value?.orders != null) {
   prevOrders.value = orders;
 }
 
+
 const handlePayment = async (e: any) => {
   e.preventDefault();
   if (
@@ -192,7 +193,7 @@ const handlePayment = async (e: any) => {
       console.log(res);
       let order = res.data.order;
       var options = {
-        key: runtimeconfig.public.RAZORPAY_KEY_ID,
+        key: runtimeconfig.public.razorpayKey,
         amount: order.amount_due,
         name: "William and Harry",
         image: logo,

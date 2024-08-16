@@ -12,6 +12,7 @@ import { db } from "~/firebase.js";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { collection, doc, setDoc } from "firebase/firestore";
+import type { DocumentData } from "firebase-admin/firestore";
 
 const input = ref();
 const isAdmin = ref(false);
@@ -24,7 +25,11 @@ const handleSubmit = () => {
     : (isAdmin.value = false);
 };
 
-const orders = useCollection(collection(db, "orders"));
+const {data, promise} = useCollection(collection(db, "orders"));
+const orders = ref();
+promise.value.then((orders:any) => {
+ orders.value = orders;
+});
 
 function getKeyByValue(
   object: { [key: string]: string | number },
@@ -34,16 +39,14 @@ function getKeyByValue(
 }
 
 const changeOrderDeliveryStatus = (orderId:string) => {
-  const order = useDocument(
+  const {data,promise}= useDocument(
     doc(collection(db, "orders"), orderId)
-  ).data.value;
-  console.log(order)
+  );
+  
+promise.value.then((order:any) => {
+console.log(order.orderId)
+});
 
-  // if(order?.delivery == "Pending"){
-  //   setDoc(doc(collection(db, "orders"), orderId), {
-  //     ...order,
-  //     delivery: "Delivered",
-  //   });
   // }else{
   //   setDoc(doc(collection(db, "orders"), orderId), {
   //     ...order,

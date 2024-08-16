@@ -11,24 +11,25 @@ const user = useCurrentUser();
 const signInwithGoogle = () => {
   if (auth)
     signInWithPopup(auth, new GoogleAuthProvider()).then(async () => {
-      const fetchUser = await useDocument(
+      const { data, promise } = useDocument(
         doc(collection(db, "users"), user.value?.uid)
       );
-      if (fetchUser.value == null) {
-        const userRef = await doc(collection(db, "users"), user.value?.uid);
-        await setDoc(userRef, {
-          orders: [],
-        });
-      }
-      router.replace("/");
+      promise.value.then((fetchUser: any) => {
+        if (fetchUser.value == null) {
+          const userRef = doc(collection(db, "users"), user.value?.uid);
+          setDoc(userRef, {
+            orders: [],
+          });
+        }
+        router.replace("/");
+      });
+
     });
 };
 </script>
 
 <template>
-  <div
-    class="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px] grid-container"
-  >
+  <div class="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px] grid-container">
     <div class="flex items-center justify-center py-12">
       <div class="mx-auto grid w-[350px] gap-6">
         <div class="grid gap-2 text-center">
@@ -38,19 +39,14 @@ const signInwithGoogle = () => {
           </p>
         </div>
         <div class="grid gap-4">
-          <Button variant="outline" class="w-full" @click="signInwithGoogle()"
-            >Join with Google
+          <Button variant="outline" class="w-full" @click="signInwithGoogle()">Join with Google
           </Button>
         </div>
       </div>
     </div>
     <div class="bg-muted lg:block image-container">
-      <img
-        src="~/assets/images/placeholder.jpg"
-        alt="Image"
-        height="100vh"
-        class="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale image"
-      />
+      <img src="~/assets/images/placeholder.jpg" alt="Image" height="100vh"
+        class="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale image" />
     </div>
   </div>
 </template>
@@ -59,6 +55,7 @@ const signInwithGoogle = () => {
 .image {
   height: 100vh;
 }
+
 .logo {
   width: 60px;
   position: absolute;
@@ -70,6 +67,7 @@ const signInwithGoogle = () => {
   .image {
     height: 75.6vh;
   }
+
   .logo {
     position: inherit;
     margin-top: -30px;

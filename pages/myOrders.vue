@@ -7,7 +7,8 @@
       </p>
       <Card v-else>
         <div v-for="(order, i) in myOrders" :key="i">
-          <CardHeader>
+          <div v-if="order">
+            <CardHeader>
             <CardTitle>Order ID: {{ order.orderId }}</CardTitle>
           </CardHeader>
           <CardContent>
@@ -19,6 +20,8 @@
           <CardFooter>
             <p>Delivery Status: {{ order.delivery }}</p>
           </CardFooter>
+          </div>
+         
         </div>
       </Card>
       <Button @click="navigateTo('/')" v-if="myOrders == null">Shop</Button>
@@ -42,11 +45,15 @@ const user = useCurrentUser();
 const myOrders = ref(null);
 
 setTimeout(() => {
-  myOrders.value = useDocument(
+  const { data, promise } = useDocument(
     doc(collection(db, "users"), user.value?.uid)
-  ).data?.value?.orders;
-}, 500);
-console.log(myOrders.value);
+  );
+
+  promise.value.then((user: any) => {
+    myOrders.value = user.orders
+    console.log(myOrders.value)
+  });
+},500)
 </script>
 
 <style scoped></style>

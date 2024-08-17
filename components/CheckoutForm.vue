@@ -232,7 +232,7 @@ const handlePayment = async (e: any) => {
             }),
           });
           store.cart = [];
-          navigateTo("/myOrders");
+          window.location.reload();
         },
       };
 

@@ -7,8 +7,8 @@
       </p>
       <section v-else>
         <div v-for="(order, i) in myOrders" :key="i">
-          <div v-if="order">
-            <Card class="m-2" >
+          <div v-if="order.length > 0">
+            <Card class="m-2">
               <CardHeader>
                 <CardTitle>Order ID: {{ order.orderId }}</CardTitle>
               </CardHeader>
@@ -52,7 +52,7 @@ setTimeout(() => {
     }
   });
   console.log(myOrders.value);
-}, 500);
+}, 1000);
 </script>
 
 <style scoped></style>

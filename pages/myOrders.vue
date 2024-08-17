@@ -6,8 +6,8 @@
         No Orders to Track
       </p>
       <section v-else>
-        <div v-for="(order, i) in myOrders" :key="i">
-          <div v-if="order.length > 0">
+        <div v-for="(order, i) in myOrders.orders" :key="i">
+          <div >
             <Card class="m-2">
               <CardHeader>
                 <CardTitle>Order ID: {{ order.orderId }}</CardTitle>
@@ -48,11 +48,10 @@ const myOrders = ref(null);
 setTimeout(() => {
   getDoc(doc(db, "users", user.value?.uid)).then((doc) => {
     if (doc.exists()) {
-      myOrders.value = doc.data().orders;
+      myOrders.value = doc.data();
     }
   });
-  console.log(myOrders.value);
-}, 1000);
+}, 500);
 </script>
 
 <style scoped></style>

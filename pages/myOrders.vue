@@ -7,7 +7,7 @@
       </p>
       <section v-else>
         <div v-for="(order, i) in myOrders.orders" :key="i">
-          <div >
+          <div>
             <Card class="m-2">
               <CardHeader>
                 <CardTitle>Order ID: {{ order.orderId }}</CardTitle>
@@ -19,7 +19,15 @@
                 </template>
               </CardContent>
               <CardFooter>
-                <p>Delivery Status: {{ order.delivery }}</p>
+                <p>
+                  Delivery Status:
+                  <span
+                    :class="
+                      order.delivery == 'Pending' ? 'Pending' : 'Delivered'
+                    "
+                    >{{ order.delivery }}</span
+                  >
+                </p>
               </CardFooter>
             </Card>
           </div>
@@ -45,7 +53,6 @@ import {
 const user = useCurrentUser();
 const myOrders = ref(null);
 
-
 setTimeout(() => {
   getDoc(doc(db, "users", user.value?.uid)).then((doc) => {
     if (doc.exists()) {
@@ -55,4 +62,11 @@ setTimeout(() => {
 }, 500);
 </script>
 
-<style scoped></style>
+<style scoped>
+span.Pending {
+  color: #ef4444;
+}
+span.Delivered {
+  color: green;
+}
+</style>

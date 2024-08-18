@@ -14,7 +14,7 @@
               </CardHeader>
               <CardContent>
                 <template v-for="(product, i) in order.products" :key="i">
-                  <p>{{ product.name }} x {{ product.quantity }}</p>
+                  <p>{{ product.name }} x {{ product.quantity }} x {{ product.size }}</p>
                   <p>₹{{ product.price }}</p>
                 </template>
               </CardContent>

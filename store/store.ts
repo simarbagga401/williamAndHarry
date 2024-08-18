@@ -31,4 +31,5 @@ interface Suit {
   price: number;
   coatImage: string;
   quantity: number;
+  size:string;
 }

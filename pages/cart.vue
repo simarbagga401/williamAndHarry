@@ -14,8 +14,11 @@
             <CardContent class="p-10 flex flex-col items-start justify-evenly">
               <CardTitle>{{ item.name }}</CardTitle>
               <CardDescription class="font-bold"
-                >{{ item.price }} X {{ item.quantity }}</CardDescription
-              >
+                >₹{{ item.price }} X {{ item.quantity }}
+                <span class="font-bold text-[#07203F] ml-5">
+                  {{ item.size }}
+                </span>
+              </CardDescription>
             </CardContent>
             <CardFooter>
               <Button @click="store.deleteFromCart(item.id)">Delete</Button>
@@ -32,7 +35,7 @@
           v-if="cart.length != 0"
           class="flex items-center justify-between p-3"
         >
-          <p class="font-bold">Total : {{ totalAmount() }}</p>
+          <p class="font-bold">Total : ₹{{ totalAmount() }}</p>
           <Button @click="openCheckoutForm = true">Checkout</Button>
         </footer>
       </Card>

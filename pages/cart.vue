@@ -21,7 +21,9 @@
               </CardDescription>
             </CardContent>
             <CardFooter>
-              <Button @click="store.deleteFromCart(item.id)">Delete</Button>
+              <Button @click="deleteFromCart(item.id, item.size)"
+                >Delete</Button
+              >
             </CardFooter>
           </Card>
         </template>
@@ -63,6 +65,23 @@ const user = useCurrentUser();
 const store = useUserDetailsStore();
 const cart = store.cart;
 const totalAmount = store.totalAmount;
+
+const deleteFromCart = (id: number, size: string) => {
+  if (
+    store.cart[
+      store.cart.findIndex((item) => item.id == id && item.size == size)
+    ].quantity > 1
+  ) {
+    store.cart[
+      store.cart.findIndex((item) => item.id == id && item.size == size)
+    ].quantity--;
+  } else {
+    let removeIndex = store.cart
+      .map((item) => item.id === id && item.size === size)
+      .indexOf(true);
+    store.cart.splice(removeIndex, 1);
+  }
+};
 </script>
 
 <style>

@@ -26,21 +26,15 @@ const handleSubmit = async () => {
     }
   );
   isAdmin.value = axiosReq.data;
-  console.log(isAdmin.value);
 };
 
-const { data, promise } = useCollection(collection(db, "orders"));
 const orders = ref([]);
-promise.value.then((o: any) => {
-  orders.value = o;
-});
-
-function getKeyByValue(
-  object: { [key: string]: string | number },
-  value: string | number
-) {
-  return Object.keys(object).find((key) => object[key] === value);
-}
+setTimeout(() => {
+  const { data, promise } = useCollection(collection(db, "orders"));
+  promise.value.then((o: any) => {
+    orders.value = o;
+  });
+}, 2000);
 
 const changeOrderDeliveryStatus = (orderId: string) => {
   const { data, promise } = useDocument(doc(collection(db, "orders"), orderId));

@@ -176,7 +176,12 @@ const sizes = {
 
 const sizeChartOpen = ref(false);
 const selectedSize = ref("S");
-
+watch(
+  () => selectedSize.value,
+  (value) => {
+    console.log(value);
+  }
+);
 let user = useCurrentUser();
 const store = useUserDetailsStore();
 const cart = store.cart;
@@ -187,11 +192,10 @@ const handleAddToCart = async () => {
   }
 
   const selectedItem = store.cart.find(
-    (item) => item.id == parseInt(id.toString())
+    (item) =>
+      item.id == parseInt(id.toString()) && item.size == selectedSize.value
   );
-  if (
-    !selectedItem && selectedItem?.size !== selectedSize.value
-  ) {
+  if (!selectedItem) {
     store.addToCart({
       id: suits[parseInt(id.toString()) - 1].id,
       name: suits[parseInt(id.toString()) - 1].name,
@@ -201,7 +205,11 @@ const handleAddToCart = async () => {
       size: selectedSize.value,
     });
   } else {
-    store.incrementQuantity(suits[parseInt(id.toString()) - 1].id);
+    let index = store.cart.findIndex(
+      (item) =>
+        item.id == parseInt(id.toString()) && item.size === selectedSize.value
+    );
+    store.cart[index].quantity++;
   }
 
   toast("Item added to Cart");

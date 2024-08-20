@@ -217,8 +217,8 @@ const handlePayment = async (e: any) => {
         theme: {
           color: "#000000", // Set your website theme color
         },
-        handler: (response: any) => {
-          setDoc(doc(db, "orders", order.id), {
+        handler: async (response: any) => {
+          await setDoc(doc(db, "orders", order.id), {
             ...data,
             paymentId: response.razorpay_payment_id,
             orderId: response.razorpay_order_id,
@@ -226,7 +226,7 @@ const handlePayment = async (e: any) => {
             delivery: "Pending",
           });
 
-          updateDoc(doc(db, "users", user.value?.uid), {
+          await updateDoc(doc(db, "users", user.value?.uid), {
             orders: arrayUnion({
               orderId: response.razorpay_order_id,
               products: data.products,
@@ -234,7 +234,9 @@ const handlePayment = async (e: any) => {
             }),
           });
           store.cart = [];
-          window.location.reload();
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
         },
       };
 

@@ -1,23 +1,23 @@
 <template>
   <main class="flex flex-col items-center justify-between w-full pt-5">
-    <section
-      class="hero-section flex flex-col items-center justify-center w-full"
-    >
+    <section class="hero-section flex items-center justify-center w-full">
+      <section class="block1"></section>
+      <section class="block2"></section>
       <h1
-        class="font-bold text-6xl text-white p-3 m-5 mx-16 bg-[#07203F] "
+        class="font-bold text-6xl text-white p-3 m-5 mx-16 bg-[#07203F] absolute top-1/3 heading"
       >
         Premium Suits
       </h1>
-      <p class="text-2xl p-2 text-[#07203F] justify-self-center bg-slate-50">
+      <p
+        class="text-2xl p-2 text-[#07203F] justify-self-center bg-slate-50 absolute top-1/2"
+      >
         Choose from a wide range of suits for every occasion.
       </p>
     </section>
     <section class="suits-container h-full">
       <Card v-for="(suit, i) in suits" :key="i" class="m-10 card max-h-[600px]">
         <CardHeader>
-          <CardTitle class="text-[#07203F] ">
-            {{ suit.name }}</CardTitle
-          >
+          <CardTitle class="text-[#07203F]"> {{ suit.name }}</CardTitle>
           <CardDescription>{{ suit.description }}</CardDescription>
         </CardHeader>
         <CardContent>
@@ -139,8 +139,21 @@ img {
 
 .hero-section {
   height: 80vh;
-  background-image: url("~/assets/images/coats.jpg");
-  background-size: cover;
+  background: grey;
+  position: relative;
+
+  .block1 {
+    height: 100%;
+    width: 50%;
+    background: url("~/assets/images/suit2.jpg") center;
+    background-size: cover;
+  }
+  .block2 {
+    width: 50%;
+    height: 100%;
+    background: url("~/assets/images/suit1.jpg") center;
+    background-size: cover;
+  }
 }
 
 .suits-container {
@@ -167,6 +180,12 @@ img {
   img {
     width: 100px;
   }
+  .block1 {
+    width: 100% !important;
+  }
+  .block2 {
+    display: none;
+  }
   footer {
     flex-direction: column;
     height: 200px;
@@ -177,6 +196,12 @@ img {
   }
   .footer-social-media-container {
     width: 100%;
+  }
+}
+
+@media screen and (max-width: 570px) {
+  .heading {
+    top: 25%;
   }
 }
 </style>

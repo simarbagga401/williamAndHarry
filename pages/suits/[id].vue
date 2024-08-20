@@ -147,8 +147,8 @@
           <p class="font-bold">
             ₹{{
               selectedPiece == "2 Piece"
-                ? suits[parseInt(id.toString()) - 1].threePiecePrice
-                : suits[parseInt(id.toString()) - 1].twoPiecePrice
+                ? suits[parseInt(id.toString()) - 1].twoPiecePrice
+                : suits[parseInt(id.toString()) - 1].threePiecePrice
             }}
           </p>
           <Button @click="handleAddToCart">Add to Cart</Button>

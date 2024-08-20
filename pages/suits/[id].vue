@@ -67,10 +67,10 @@
       >
     </Card>
     <section
-      class="flex  items-center w-full justify-evenly h-full px-20 main-container"
+      class="flex items-center w-full justify-evenly h-full px-20 main-container"
       :class="{ blur: sizeChartOpen }"
     >
-      <header class="flex flex-col justify-center items-center" >
+      <header class="flex flex-col justify-center items-center">
         <h1 class="font-bold text-4xl text-[#07203F] m-10">
           {{ suits[parseInt(id.toString()) - 1].name }}
         </h1>
@@ -120,8 +120,8 @@
               class="rounded-md p-1 text-[#07203F] w-60 bg-white border-[#07203F] border-solid border"
               v-model="selectedPiece"
             >
-              <option>2 Piece</option>
-              <option>3 Piece</option>
+              <option value="2 Piece">2 Piece</option>
+              <option value="3 Piece">3 Piece</option>
             </select>
             <p class="m-1">Blazer Size</p>
             <select
@@ -145,7 +145,11 @@
         </div>
         <footer class="flex items-center w-60 max-h-16 p-5 justify-between">
           <p class="font-bold">
-            ₹{{ suits[parseInt(id.toString()) - 1].price }}
+            ₹{{
+              selectedPiece == "2 Piece"
+                ? suits[parseInt(id.toString()) - 1].threePiecePrice
+                : suits[parseInt(id.toString()) - 1].twoPiecePrice
+            }}
           </p>
           <Button @click="handleAddToCart">Add to Cart</Button>
         </footer>
@@ -220,23 +224,29 @@ const handleAddToCart = async () => {
     (item) =>
       item.id == parseInt(id.toString()) &&
       item.coatSize == selectedCoatSize.value &&
+      item.piece == selectedPiece.value &&
       item.pantSize == selectedPantSize.value
   );
   if (!selectedItem) {
     store.addToCart({
       id: suits[parseInt(id.toString()) - 1].id,
       name: suits[parseInt(id.toString()) - 1].name,
-      price: suits[parseInt(id.toString()) - 1].price,
+      price:
+        selectedPiece.value == "2 Piece"
+          ? suits[parseInt(id.toString()) - 1].twoPiecePrice
+          : suits[parseInt(id.toString()) - 1].threePiecePrice,
       coatImage: suits[parseInt(id.toString()) - 1].coatImage,
       quantity: 1,
       coatSize: selectedCoatSize.value,
       pantSize: selectedPantSize.value,
+      piece: selectedPiece.value,
     });
   } else {
     let index = store.cart.findIndex(
       (item) =>
         item.id == parseInt(id.toString()) &&
         item.coatSize == selectedCoatSize.value &&
+        item.piece == selectedPiece.value &&
         item.pantSize == selectedPantSize.value
     );
     store.cart[index].quantity++;

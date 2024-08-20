@@ -22,4 +22,5 @@ interface Suit {
   quantity: number;
   coatSize: string;
   pantSize: string;
+  piece:string;
 }

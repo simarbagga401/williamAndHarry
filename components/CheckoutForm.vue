@@ -187,7 +187,8 @@ const handlePayment = async (e: any) => {
         name: item.name,
         price: item.price,
         quantity: item.quantity,
-        size:item.size,
+        coatSize: item.coatSize,
+        pantSize: item.pantSize,
       };
     }),
   };

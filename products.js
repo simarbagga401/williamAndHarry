@@ -17,7 +17,8 @@ export const suits = [
       "A classic blue jacket, often in shades like navy or royal blue. coordinating trousers in the same shade of blue as the coat",
     coatImage: greyCoat,
     pantImage: greyPant,
-    price: 3500,
+    twoPiecePrice: 3500,
+    threePiecePrice: 4000,
   },
   {
     id: 2,
@@ -26,7 +27,8 @@ export const suits = [
       " A classic blue jacket, often in shades like navy or royal blue. Coordinating trousers in the same shade of blue as the coat",
     coatImage: blueCoat,
     pantImage: bluePant,
-    price: 4500,
+    twoPiecePrice: 3500,
+    threePiecePrice: 4000,
   },
   {
     id: 3,
@@ -35,7 +37,8 @@ export const suits = [
       " A classic blue jacket, often in shades like navy or royal blue. Coordinating trousers in the same shade of blue as the coat",
     coatImage: whiteCoat,
     pantImage: whitePant,
-    price: 3000,
+    twoPiecePrice: 3500,
+    threePiecePrice: 4000,
   },
   {
     id: 4,
@@ -44,7 +47,8 @@ export const suits = [
       " A classic blue jacket, often in shades like navy or royal blue. Coordinating trousers in the same shade of blue as the coat",
     coatImage: purpleCoat,
     pantImage: purplePant,
-    price: 4000,
+    twoPiecePrice: 3500,
+    threePiecePrice: 4000,
   },
   {
     id: 5,
@@ -53,6 +57,7 @@ export const suits = [
       " A classic blue jacket, often in shades like navy or royal blue. Coordinating trousers in the same shade of blue as the coat",
     coatImage: blackCoat,
     pantImage: blackPant,
-    price: 5000,
+    twoPiecePrice: 3500,
+    threePiecePrice: 4000,
   },
 ];

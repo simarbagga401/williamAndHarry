@@ -139,7 +139,6 @@ img {
 
 .hero-section {
   height: 80vh;
-  background: grey;
   position: relative;
 
   .block1 {

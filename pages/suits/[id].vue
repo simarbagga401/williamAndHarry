@@ -2,7 +2,7 @@
   <main class="flex flex-col items-center h-screen w-screen py-10 relative">
     <Toaster />
     <Card
-      class="size-chart-conatiner absolute bg-white w-1/2 h-[450px] z-10 top-[300px] left-1/7 flex flex-col items-center justify-center"
+      class="size-chart-conatiner min-w-72 absolute bg-white w-1/2 h-[450px] z-10 top-[100px] left-1/7 flex flex-col items-center justify-center"
       v-show="sizeChartOpen"
     >
       <Table>
@@ -67,68 +67,88 @@
       >
     </Card>
     <section
-      class="flex flex-col items-center w-full justify-evenly h-full px-20"
+      class="flex  items-center w-full justify-evenly h-full px-20 main-container"
       :class="{ blur: sizeChartOpen }"
     >
-      <h1 class="font-bold text-4xl text-[#07203F]">
-        {{ suits[parseInt(id.toString()) - 1].name }}
-      </h1>
-      <div class="description-container h-25 flex items-center">
-        <p>
-          {{ suits[parseInt(id.toString()) - 1].description }}
-        </p>
-      </div>
-      <div class="size-selection-container p-2">
-        <header class="flex p-1 w-full justify-between">
-          <p class="font-bold">Select Size:</p>
-          <p
-            class="text-green-400 cursor-pointer"
-            @click="sizeChartOpen = true"
-          >
-            Open Size Chart
+      <header class="flex flex-col justify-center items-center" >
+        <h1 class="font-bold text-4xl text-[#07203F] m-10">
+          {{ suits[parseInt(id.toString()) - 1].name }}
+        </h1>
+        <Carousel class="relative w-full max-w-sm">
+          <CarouselContent>
+            <CarouselItem>
+              <div class="p-1">
+                <Card>
+                  <CardContent
+                    class="flex aspect-square items-center justify-center p-6"
+                  >
+                    <img :src="suits[parseInt(id.toString()) - 1].coatImage" />
+                  </CardContent>
+                </Card>
+              </div>
+            </CarouselItem>
+            <CarouselItem>
+              <div class="p-1">
+                <Card>
+                  <CardContent
+                    class="flex aspect-square items-center justify-center p-6"
+                  >
+                    <img :src="suits[parseInt(id.toString()) - 1].pantImage" />
+                  </CardContent>
+                </Card>
+              </div>
+            </CarouselItem>
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+      </header>
+      <footer class="flex flex-col items-center justify-center">
+        <div class="size-selection-container p-2">
+          <header class="flex p-1 w-full justify-between">
+            <p class="font-bold mr-3">Select Specifications</p>
+            <p
+              class="text-green-400 cursor-pointer"
+              @click="sizeChartOpen = true"
+            >
+              Open Size Chart
+            </p>
+          </header>
+          <section>
+            <p class="m-1">2 Piece or 3 Piece</p>
+            <select
+              class="rounded-md p-1 text-[#07203F] w-60 bg-white border-[#07203F] border-solid border"
+              v-model="selectedPiece"
+            >
+              <option>2 Piece</option>
+              <option>3 Piece</option>
+            </select>
+            <p class="m-1">Blazer Size</p>
+            <select
+              class="rounded-md p-1 text-[#07203F] w-60 bg-white border-[#07203F] border-solid border"
+              v-model="selectedCoatSize"
+            >
+              <option v-for="(size, i) in coatSizes" :key="i">
+                {{ size }}
+              </option>
+            </select>
+            <p class="m-1">Trouser Size</p>
+            <select
+              class="rounded-md p-1 text-[#07203F] w-60 bg-white border-[#07203F] border-solid border"
+              v-model="selectedPantSize"
+            >
+              <option v-for="(size, i) in trouserSizes" :key="i">
+                {{ size }}
+              </option>
+            </select>
+          </section>
+        </div>
+        <footer class="flex items-center w-60 max-h-16 p-5 justify-between">
+          <p class="font-bold">
+            ₹{{ suits[parseInt(id.toString()) - 1].price }}
           </p>
-        </header>
-        <template v-for="(size, i) in sizes" :key="i">
-          <button
-            class="p-2 m-2 border border-[#07203F] rounded-md"
-            @click="selectedSize = size"
-            :class="{ 'bg-[#07203F] text-white': selectedSize === size }"
-          >
-            {{ size }}
-          </button>
-        </template>
-      </div>
-      <Carousel class="relative w-full max-w-sm">
-        <CarouselContent>
-          <CarouselItem>
-            <div class="p-1">
-              <Card>
-                <CardContent
-                  class="flex aspect-square items-center justify-center p-6"
-                >
-                  <img :src="suits[parseInt(id.toString()) - 1].coatImage" />
-                </CardContent>
-              </Card>
-            </div>
-          </CarouselItem>
-          <CarouselItem>
-            <div class="p-1">
-              <Card>
-                <CardContent
-                  class="flex aspect-square items-center justify-center p-6"
-                >
-                  <img :src="suits[parseInt(id.toString()) - 1].pantImage" />
-                </CardContent>
-              </Card>
-            </div>
-          </CarouselItem>
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
-      <footer class="flex items-center w-60 max-h-16 p-5 justify-between">
-        <p class="font-bold">₹{{ suits[parseInt(id.toString()) - 1].price }}</p>
-        <Button @click="handleAddToCart">Add to Cart</Button>
+          <Button @click="handleAddToCart">Add to Cart</Button>
+        </footer>
       </footer>
     </section>
   </main>
@@ -166,7 +186,7 @@ import { toast } from "vue-sonner";
 
 import { suits } from "~/products";
 
-const sizes = {
+const coatSizes = {
   1: "S",
   2: "M",
   3: "L",
@@ -174,14 +194,19 @@ const sizes = {
   5: "XXL",
 };
 
+const trouserSizes = {
+  1: "28",
+  2: "30",
+  3: "32",
+  4: "34",
+  5: "36",
+};
+
+const selectedPiece = ref("3 Piece");
+
 const sizeChartOpen = ref(false);
-const selectedSize = ref("S");
-watch(
-  () => selectedSize.value,
-  (value) => {
-    console.log(value);
-  }
-);
+const selectedCoatSize = ref("S");
+const selectedPantSize = ref("28");
 let user = useCurrentUser();
 const store = useUserDetailsStore();
 const cart = store.cart;
@@ -193,7 +218,9 @@ const handleAddToCart = async () => {
 
   const selectedItem = store.cart.find(
     (item) =>
-      item.id == parseInt(id.toString()) && item.size == selectedSize.value
+      item.id == parseInt(id.toString()) &&
+      item.coatSize == selectedCoatSize.value &&
+      item.pantSize == selectedPantSize.value
   );
   if (!selectedItem) {
     store.addToCart({
@@ -202,12 +229,15 @@ const handleAddToCart = async () => {
       price: suits[parseInt(id.toString()) - 1].price,
       coatImage: suits[parseInt(id.toString()) - 1].coatImage,
       quantity: 1,
-      size: selectedSize.value,
+      coatSize: selectedCoatSize.value,
+      pantSize: selectedPantSize.value,
     });
   } else {
     let index = store.cart.findIndex(
       (item) =>
-        item.id == parseInt(id.toString()) && item.size === selectedSize.value
+        item.id == parseInt(id.toString()) &&
+        item.coatSize == selectedCoatSize.value &&
+        item.pantSize == selectedPantSize.value
     );
     store.cart[index].quantity++;
   }
@@ -219,15 +249,13 @@ const { id } = useRoute().params;
 </script>
 
 <style scoped>
-.description-container {
-  overflow: auto;
-  padding: 10px;
-}
-p {
-  text-align: center;
-}
 .blur {
   filter: blur(5px);
   background: rgb(227, 227, 227);
+}
+@media screen and (max-width: 768px) {
+  .main-container {
+    flex-direction: column;
+  }
 }
 </style>

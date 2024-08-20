@@ -16,12 +16,16 @@
               <CardDescription class="font-bold"
                 >₹{{ item.price }} X {{ item.quantity }}
                 <span class="font-bold text-[#07203F] ml-5">
-                  {{ item.size }}
+                  {{ item.coatSize }}
+                </span>
+                <span class="font-bold text-[#07203F] ml-5">
+                  {{ item.pantSize }}
                 </span>
               </CardDescription>
             </CardContent>
             <CardFooter>
-              <Button @click="deleteFromCart(item.id, item.size)"
+              <Button
+                @click="deleteFromCart(item.id, item.coatSize, item.pantSize)"
                 >Delete</Button
               >
             </CardFooter>
@@ -66,18 +70,33 @@ const store = useUserDetailsStore();
 const cart = store.cart;
 const totalAmount = store.totalAmount;
 
-const deleteFromCart = (id: number, size: string) => {
+const deleteFromCart = (id: number, coatSize: string, pantSize: string) => {
   if (
     store.cart[
-      store.cart.findIndex((item) => item.id == id && item.size == size)
+      store.cart.findIndex(
+        (item) =>
+          item.id == id &&
+          item.coatSize == coatSize &&
+          item.pantSize == pantSize
+      )
     ].quantity > 1
   ) {
     store.cart[
-      store.cart.findIndex((item) => item.id == id && item.size == size)
+      store.cart.findIndex(
+        (item) =>
+          item.id == id &&
+          item.coatSize == coatSize &&
+          item.pantSize == pantSize
+      )
     ].quantity--;
   } else {
     let removeIndex = store.cart
-      .map((item) => item.id === id && item.size === size)
+      .map(
+        (item) =>
+          item.id === id &&
+          item.coatSize === coatSize &&
+          item.pantSize === pantSize
+      )
       .indexOf(true);
     store.cart.splice(removeIndex, 1);
   }

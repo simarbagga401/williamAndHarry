@@ -1,5 +1,5 @@
 <template>
-  <main class="flex flex-col items-center justify-between w-full pt-5">
+  <main class="flex flex-col items-center justify-between w-full pt-5 overflow-hidden">
     <section class="hero-section flex items-center justify-center w-full">
       <section class="block1"></section>
       <section class="block2"></section>
@@ -200,7 +200,7 @@ img {
 
 @media screen and (max-width: 570px) {
   .heading {
-    top: 25%;
+    top: 20%;
   }
 }
 </style>

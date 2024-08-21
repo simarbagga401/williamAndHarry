@@ -38,11 +38,17 @@
       </section>
       <Button @click="navigateTo('/')" v-if="myOrders == null">Shop</Button>
     </div>
+      <Button disabled v-if="loading">
+        <Loader2 class="w-4 h-4 mr-2 animate-spin" />
+        Please wait
+      </Button>
   </section>
 </template>
 
 <script setup lang="ts">
 import { collection, doc, getDoc } from "firebase/firestore";
+import { Loader2 } from "lucide-vue-next";
+import { Button } from "@/components/ui/button";
 import { db } from "~/firebase";
 import {
   Card,
@@ -55,6 +61,7 @@ import {
 
 const user = useCurrentUser();
 const myOrders = ref(null);
+const loading = ref(true);
 
 setTimeout(() => {
   const { data, promise } = useDocument(
@@ -67,7 +74,8 @@ setTimeout(() => {
     .catch((error: any) => {
       console.log("error firebase", error);
     });
-}, 2000);
+    loading.value = false;
+}, 4000);
 </script>
 
 <style scoped>

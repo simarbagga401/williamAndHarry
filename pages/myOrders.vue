@@ -63,7 +63,7 @@ const { data, promise } = useDocument(
 promise.value.then((user:any) => {
   myOrders.value = user 
 });
-}, 500);
+}, 2000);
 </script>
 
 <style scoped>

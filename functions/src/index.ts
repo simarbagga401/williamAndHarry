@@ -25,8 +25,8 @@ router.post("/sendEmail", async (req: Request, res: Response) => {
     port: 587,
     secure: false, // Use `true` for port 465, `false` for all other ports
     auth: {
-      user: process.env.email,
-      pass: process.env.password,
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD,
     },
   });
 

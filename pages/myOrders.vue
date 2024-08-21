@@ -38,10 +38,10 @@
       </section>
       <Button @click="navigateTo('/')" v-if="myOrders == null">Shop</Button>
     </div>
-      <Button disabled v-if="loading">
-        <Loader2 class="w-4 h-4 mr-2 animate-spin" />
-        Please wait
-      </Button>
+    <Button disabled v-if="loading">
+      <Loader2 class="w-4 h-4 mr-2 animate-spin" />
+      Please wait
+    </Button>
   </section>
 </template>
 
@@ -59,13 +59,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-const user = useCurrentUser();
+const currentUser = getCurrentUser();
 const myOrders = ref(null);
 const loading = ref(true);
 
-setTimeout(() => {
+currentUser.then((user) => {
   const { data, promise } = useDocument(
-    doc(collection(db, "users"), user.value?.uid)
+    doc(collection(db, "users"), user.uid)
   );
   promise.value
     .then((user: any) => {
@@ -74,8 +74,8 @@ setTimeout(() => {
     .catch((error: any) => {
       console.log("error firebase", error);
     });
-    loading.value = false;
-}, 4000);
+  loading.value = false;
+});
 </script>
 
 <style scoped>

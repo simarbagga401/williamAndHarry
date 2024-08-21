@@ -133,7 +133,7 @@ const formSchema = toTypedSchema(
 );
 const district = ref(null);
 const state = ref(null);
-const user = useCurrentUser();
+const user = await getCurrentUser();
 
 const getCityState = async () => {
   const fetchCityState = (

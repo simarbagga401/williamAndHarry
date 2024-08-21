@@ -1,6 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
+  routeRules: {
+    "/myOrders/**": { ssr: false },
+    "/cart/**": { ssr: false },
+  },
   runtimeConfig: {
     public: {
       RAZORPAY_KEY_ID: process.env.RAZORPAY_KEY_ID,

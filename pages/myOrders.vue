@@ -62,7 +62,9 @@ const { data, promise } = useDocument(
 );
 promise.value.then((user:any) => {
   myOrders.value = user 
-});
+}).catch((error:any) => {
+  console.log(error)
+})
 }, 2000);
 </script>
 

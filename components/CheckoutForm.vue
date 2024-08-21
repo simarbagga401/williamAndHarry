@@ -133,7 +133,7 @@ const formSchema = toTypedSchema(
 );
 const district = ref(null);
 const state = ref(null);
-const user = await getCurrentUser();
+const user = useCurrentUser();
 
 const getCityState = async () => {
   const fetchCityState = (
@@ -149,13 +149,6 @@ const form = useForm({
   validationSchema: formSchema,
 });
 
-const { data, promise } = useDocument(
-  doc(collection(db, "users"), user.value?.uid)
-);
-
-// const userDetails = await getDoc(doc(db, "users", user.value?.uid));
-// let { ...prevOrders } = userDetails.data()?.orders;
-// console.log(prevOrders);
 
 const handlePayment = async (e: any) => {
   e.preventDefault();

@@ -50,6 +50,7 @@ import { collection, doc, getDoc } from "firebase/firestore";
 import { Loader2 } from "lucide-vue-next";
 import { Button } from "@/components/ui/button";
 import { db } from "~/firebase";
+import { getCurrentUser } from "vuefire";
 import {
   Card,
   CardContent,
@@ -58,26 +59,23 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { onAuthStateChanged, getAuth } from "firebase/auth";
 
-const currentUser = getCurrentUser();
 const myOrders = ref(null);
 const loading = ref(true);
-
-setTimeout(() => {
-  currentUser.then((user) => {
-    const { data, promise } = useDocument(
-      doc(collection(db, "users"), user.uid)
-    );
-    promise.value
-      .then((user: any) => {
-        myOrders.value = user;
-      })
-      .catch((error: any) => {
-        console.log("error firebase", error);
-      });
-    loading.value = false;
-  });
-}, 500);
+onAuthStateChanged(getAuth(), (user) => {
+  const { data, promise } = useDocument(
+    doc(collection(db, "users"), user?.uid)
+  );
+  promise.value
+    .then((user: any) => {
+      myOrders.value = user;
+    })
+    .catch((error: any) => {
+      console.log("error firebase", error);
+    });
+  loading.value = false;
+});
 </script>
 
 <style scoped>

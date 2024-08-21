@@ -18,10 +18,12 @@
                     {{ product.name }} x {{ product.quantity }} x
                     {{ product.coatSize }} x {{ product.pantSize }}
                   </p>
-                  <p>₹{{ product.price }}</p>
                 </template>
               </CardContent>
-              <CardFooter>
+              <CardFooter class="flex flex-col items-start">
+                <p>
+                  Total Price: <b>₹{{ totalprice(order.products) }}</b>
+                </p>
                 <p>
                   Delivery Status:
                   <span
@@ -76,6 +78,14 @@ onAuthStateChanged(getAuth(), (user) => {
     });
   loading.value = false;
 });
+
+const totalprice = (products: any) => {
+  let total = 0;
+  products.forEach((product: any) => {
+    total += product.price * product.quantity;
+  });
+  return total;
+};
 </script>
 
 <style scoped>

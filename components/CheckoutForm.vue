@@ -149,7 +149,6 @@ const form = useForm({
   validationSchema: formSchema,
 });
 
-
 const handlePayment = async (e: any) => {
   e.preventDefault();
   if (
@@ -226,6 +225,16 @@ const handlePayment = async (e: any) => {
               delivery: "Pending",
             }),
           });
+
+          await axios.post(
+            "https://us-central1-williamandharry-9288e.cloudfunctions.net/api/sendEmail",
+            {
+              ...data,
+              orderId: response.razorpay_order_id,
+              amount: order.amount_due,
+            }
+          );
+
           store.cart = [];
           setTimeout(() => {
             window.location.reload();

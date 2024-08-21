@@ -63,19 +63,21 @@ const currentUser = getCurrentUser();
 const myOrders = ref(null);
 const loading = ref(true);
 
-currentUser.then((user) => {
-  const { data, promise } = useDocument(
-    doc(collection(db, "users"), user.uid)
-  );
-  promise.value
-    .then((user: any) => {
-      myOrders.value = user;
-    })
-    .catch((error: any) => {
-      console.log("error firebase", error);
-    });
-  loading.value = false;
-});
+setTimeout(() => {
+  currentUser.then((user) => {
+    const { data, promise } = useDocument(
+      doc(collection(db, "users"), user.uid)
+    );
+    promise.value
+      .then((user: any) => {
+        myOrders.value = user;
+      })
+      .catch((error: any) => {
+        console.log("error firebase", error);
+      });
+    loading.value = false;
+  });
+}, 500);
 </script>
 
 <style scoped>

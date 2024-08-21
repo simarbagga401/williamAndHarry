@@ -57,14 +57,16 @@ const user = useCurrentUser();
 const myOrders = ref(null);
 
 setTimeout(() => {
-const { data, promise } = useDocument(
-  doc(collection(db, "users"), user.value?.uid)
-);
-promise.value.then((user:any) => {
-  myOrders.value = user 
-}).catch((error:any) => {
-  console.log(error)
-})
+  const { data, promise } = useDocument(
+    doc(collection(db, "users"), user.value?.uid)
+  );
+  promise.value
+    .then((user: any) => {
+      myOrders.value = user;
+    })
+    .catch((error: any) => {
+      console.log("error firebase", error);
+    });
 }, 2000);
 </script>
 

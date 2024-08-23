@@ -18,7 +18,6 @@ const signInwithGoogle = () => {
         const userRef = await doc(collection(db, "users"), user.value?.uid);
         await setDoc(userRef, {
           name: user.value?.displayName,
-          orders:[],
         });
       }
       router.replace("/");

@@ -30,58 +30,46 @@ const handleSubmit = async () => {
 
 const orders = ref([]);
 setTimeout(() => {
-  const { data, promise } = useCollection(collection(db, "orders"));
-  promise.value.then((o: any) => {
-    orders.value = o;
+  const { data, promise } = useCollection(collection(db, "users"));
+  promise.value.then((users: any) => {
+    orders.value = users;
   });
 }, 2000);
 
-const changeOrderDeliveryStatus = (orderId: string) => {
-  const { data, promise } = useDocument(doc(collection(db, "orders"), orderId));
+const changeOrderDeliveryStatus = (userId: string, orderId: string) => {
+  const { data, promise } = useDocument(doc(collection(db, "users"), userId));
 
-  promise.value.then((order: any) => {
-    const { data, promise } = useDocument(
-      doc(collection(db, "users"), order.userId)
-    );
-    promise.value.then((user) => {
-      if (order.delivery == "Pending") {
-        setDoc(doc(collection(db, "orders"), orderId), {
-          ...order,
-          delivery: "Delivered",
-        });
-        const updatedOrders = user?.orders.map((o: any) => {
-          if (o && o.orderId == orderId) {
-            return {
-              ...o,
-              delivery: "Delivered",
-            };
-          }
-          return o;
-        });
-        setDoc(doc(collection(db, "users"), order.userId), {
-          ...user,
-          orders: updatedOrders,
-        });
-      } else {
-        const updatedOrders = user?.orders.map((o: any) => {
-          if (o && o.orderId == orderId) {
-            return {
-              ...o,
-              delivery: "Pending",
-            };
-          }
-          return o;
-        });
-        setDoc(doc(collection(db, "orders"), orderId), {
-          ...order,
-          delivery: "Pending",
-        });
-        setDoc(doc(collection(db, "users"), order.userId), {
-          ...user,
-          orders: updatedOrders,
-        });
-      }
-    });
+  promise.value.then((user: any) => {
+    const order = user.orders.find((o: any) => o.orderId == orderId);
+    if (order.delivery == "Pending") {
+      const updatedOrders = user?.orders.map((o: any) => {
+        if (o && o.orderId == orderId) {
+          return {
+            ...o,
+            delivery: "Delivered",
+          };
+        }
+        return o;
+      });
+      setDoc(doc(collection(db, "users"), order.userId), {
+        ...user,
+        orders: updatedOrders,
+      });
+    } else {
+      const updatedOrders = user?.orders.map((o: any) => {
+        if (o && o.orderId == orderId) {
+          return {
+            ...o,
+            delivery: "Pending",
+          };
+        }
+        return o;
+      });
+      setDoc(doc(collection(db, "users"), order.userId), {
+        ...user,
+        orders: updatedOrders,
+      });
+    }
   });
 };
 </script>
@@ -101,21 +89,21 @@ const changeOrderDeliveryStatus = (orderId: string) => {
     </Card>
     <div v-else class="w-full h-full">
       <Card
-        v-for="(order, i) in orders"
+        v-for="(order, i) in orders.map((o) => o.orders)"
         :key="i"
         class="order-container flex p-10 m-10"
       >
-        <div class="values-container m-5">
-          <p v-for="(el, j) in order" :key="j" class="m-2">
-            {{ j }} :
-            {{ el }}
-          </p>
-        </div>
-        <Button @click="changeOrderDeliveryStatus(order.orderId)">{{
-          order.delivery == "Pending"
-            ? "Order Delivered"
-            : "Order Not Delivered"
-        }}</Button>
+        <template v-for="(o, m) in order" :key="m">
+          <div class="values-container m-5">
+            <p v-for="(el, j) in o" :key="j" class="m-2">
+              {{ j }} :
+              {{ el }}
+            </p>
+          </div>
+          <Button @click="changeOrderDeliveryStatus(o.userId, o.orderId)">{{
+            o.delivery == "Pending" ? "Order Delivered" : "Order Not Delivered"
+          }}</Button>
+        </template>
       </Card>
     </div>
   </section>

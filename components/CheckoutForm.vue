@@ -181,6 +181,7 @@ const handlePayment = async (e: any) => {
         quantity: item.quantity,
         coatSize: item.coatSize,
         pantSize: item.pantSize,
+        piece: item.piece,
       };
     }),
   };
@@ -210,18 +211,13 @@ const handlePayment = async (e: any) => {
           color: "#000000", // Set your website theme color
         },
         handler: async (response: any) => {
-          await setDoc(doc(db, "orders", order.id), {
-            ...data,
-            paymentId: response.razorpay_payment_id,
-            orderId: response.razorpay_order_id,
-            signature: response.razorpay_signature,
-            delivery: "Pending",
-          });
 
           await updateDoc(doc(db, "users", user.value?.uid), {
             orders: arrayUnion({
+              ...data,
+              paymentId: response.razorpay_payment_id,
               orderId: response.razorpay_order_id,
-              products: data.products,
+              signature: response.razorpay_signature,
               delivery: "Pending",
             }),
           });

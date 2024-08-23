@@ -32,7 +32,7 @@ const orders = ref([]);
 setTimeout(() => {
   const { data, promise } = useCollection(collection(db, "users"));
   promise.value.then((users: any) => {
-    orders.value = users;
+    orders.value = users; // loses reactivity if altered
   });
 }, 2000);
 
@@ -88,12 +88,12 @@ const changeOrderDeliveryStatus = (userId: string, orderId: string) => {
       </CardContent>
     </Card>
     <div v-else class="w-full h-full">
-      <Card
-        v-for="(order, i) in orders.map((o) => o.orders)"
+      <section
+        v-for="(order, i) in orders.map((o: any) => o.orders)"
         :key="i"
-        class="order-container flex p-10 m-10"
+        class="order-container flex flex-col p-10 m-10"
       >
-        <template v-for="(o, m) in order" :key="m">
+        <Card v-for="(o, m) in order" :key="m" class="p-5" >
           <div class="values-container m-5">
             <p v-for="(el, j) in o" :key="j" class="m-2">
               {{ j }} :
@@ -103,8 +103,8 @@ const changeOrderDeliveryStatus = (userId: string, orderId: string) => {
           <Button @click="changeOrderDeliveryStatus(o.userId, o.orderId)">{{
             o.delivery == "Pending" ? "Order Delivered" : "Order Not Delivered"
           }}</Button>
-        </template>
-      </Card>
+        </Card>
+      </section>
     </div>
   </section>
 </template>

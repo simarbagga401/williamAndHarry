@@ -1,5 +1,5 @@
 <template>
-  <main class="flex flex-col items-center h-screen w-screen py-10 relative">
+  <main class="flex flex-col items-center h-screen w-screen p-10 relative">
     <Toaster />
     <Card
       class="size-chart-conatiner min-w-72 absolute bg-white w-1/2 h-[450px] z-10 top-[100px] left-1/7 flex flex-col items-center justify-center"
@@ -67,13 +67,16 @@
       >
     </Card>
     <section
-      class="flex items-center w-full justify-evenly h-full px-20 main-container"
+      class="flex items-center w-full justify-evenly h-full main-container"
       :class="{ blur: sizeChartOpen }"
     >
-      <header class="flex flex-col justify-center items-center">
-        <h1 class="font-bold text-4xl text-[#07203F] m-10">
+      <header
+        class="flex flex-col justify-center items-center h-full w-1/2 main-header"
+      >
+        <h1 class="font-bold text-4xl text-[#07203F] m-5">
           {{ suits[parseInt(id.toString()) - 1].name }}
         </h1>
+      <p class="w-72 m-5" >{{ suits[parseInt(id.toString()) - 1].description }}</p>
         <Carousel class="relative w-full max-w-sm">
           <CarouselContent>
             <CarouselItem>
@@ -99,12 +102,16 @@
               </div>
             </CarouselItem>
           </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
+          <CarouselPrevious class="carousel-prv"/>
+          <CarouselNext class="carousel-next"/>
         </Carousel>
       </header>
-      <footer class="flex flex-col items-center justify-center">
-        <div class="size-selection-container p-2">
+      <footer
+        class="flex flex-col items-center justify-center h-full w-1/2 main-footer m-5"
+      >
+        <div
+          class="size-selection-container p-2 h-1/3 flex flex-col justify-evenly"
+        >
           <header class="flex p-1 w-full justify-between">
             <p class="font-bold mr-3">Select Specifications</p>
             <p
@@ -115,32 +122,38 @@
             </p>
           </header>
           <section>
-            <p class="m-1">2 Piece or 3 Piece</p>
-            <select
-              class="rounded-md p-1 text-[#07203F] w-60 bg-white border-[#07203F] border-solid border"
-              v-model="selectedPiece"
-            >
-              <option value="2 Piece">2 Piece</option>
-              <option value="3 Piece">3 Piece</option>
-            </select>
-            <p class="m-1">Blazer Size</p>
-            <select
-              class="rounded-md p-1 text-[#07203F] w-60 bg-white border-[#07203F] border-solid border"
-              v-model="selectedCoatSize"
-            >
-              <option v-for="(size, i) in coatSizes" :key="i">
-                {{ size }}
-              </option>
-            </select>
-            <p class="m-1">Trouser Size</p>
-            <select
-              class="rounded-md p-1 text-[#07203F] w-60 bg-white border-[#07203F] border-solid border"
-              v-model="selectedPantSize"
-            >
-              <option v-for="(size, i) in trouserSizes" :key="i">
-                {{ size }}
-              </option>
-            </select>
+            <div class="m-2">
+              <p class="m-1">2 Piece or 3 Piece</p>
+              <select
+                class="rounded-md p-1 text-[#07203F] w-60 bg-white border-[#07203F] border-solid border"
+                v-model="selectedPiece"
+              >
+                <option value="2 Piece">2 Piece</option>
+                <option value="3 Piece">3 Piece</option>
+              </select>
+            </div>
+            <div class="m-2">
+              <p class="m-1">Blazer Size</p>
+              <select
+                class="rounded-md p-1 text-[#07203F] w-60 bg-white border-[#07203F] border-solid border"
+                v-model="selectedCoatSize"
+              >
+                <option v-for="(size, i) in coatSizes" :key="i">
+                  {{ size }}
+                </option>
+              </select>
+            </div>
+            <div class="m-2">
+              <p class="m-1">Trouser Size</p>
+              <select
+                class="rounded-md p-1 text-[#07203F] w-60 bg-white border-[#07203F] border-solid border"
+                v-model="selectedPantSize"
+              >
+                <option v-for="(size, i) in trouserSizes" :key="i">
+                  {{ size }}
+                </option>
+              </select>
+            </div>
           </section>
         </div>
         <footer class="flex items-center w-60 max-h-16 p-5 justify-between">
@@ -263,9 +276,24 @@ const { id } = useRoute().params;
   filter: blur(5px);
   background: rgb(227, 227, 227);
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1000px) {
   .main-container {
     flex-direction: column;
+  }
+  .main-footer {
+    width: 100%;
+  }
+  .main-header {
+    width: 100%;
+  }
+  .carousel-prv{
+    display:none;
+  }
+  .carousel-next{
+    display:none;
+  }
+  main{
+    height: auto;
   }
 }
 </style>

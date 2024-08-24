@@ -76,34 +76,32 @@
         <h1 class="font-bold text-4xl text-[#07203F] m-5">
           {{ suits[parseInt(id.toString()) - 1].name }}
         </h1>
-      <p class="w-72 m-5" >{{ suits[parseInt(id.toString()) - 1].description }}</p>
-        <Carousel class="relative w-full max-w-sm">
-          <CarouselContent>
+        <p class="w-72 m-5">
+          {{ suits[parseInt(id.toString()) - 1].description }}
+        </p>
+        <Carousel class="relative w-full max-w-sm carousel">
+          <CarouselContent class="bg-white p-0">
             <CarouselItem>
-              <div class="p-1">
-                <Card>
-                  <CardContent
-                    class="flex aspect-square items-center justify-center p-6"
-                  >
-                    <img :src="suits[parseInt(id.toString()) - 1].coatImage" />
-                  </CardContent>
-                </Card>
+              <div>
+                <CardContent
+                  class="flex aspect-square items-center justify-center p-0"
+                >
+                  <img :src="suits[parseInt(id.toString()) - 1].coatImage" />
+                </CardContent>
               </div>
             </CarouselItem>
             <CarouselItem>
-              <div class="p-1">
-                <Card>
-                  <CardContent
-                    class="flex aspect-square items-center justify-center p-6"
-                  >
-                    <img :src="suits[parseInt(id.toString()) - 1].pantImage" />
-                  </CardContent>
-                </Card>
+              <div >
+                <CardContent
+                  class="flex aspect-square items-center justify-center p-0"
+                >
+                  <img :src="suits[parseInt(id.toString()) - 1].pantImage" />
+                </CardContent>
               </div>
             </CarouselItem>
           </CarouselContent>
-          <CarouselPrevious class="carousel-prv"/>
-          <CarouselNext class="carousel-next"/>
+          <CarouselPrevious class="carousel-prv" />
+          <CarouselNext class="carousel-next" />
         </Carousel>
       </header>
       <footer
@@ -286,14 +284,17 @@ const { id } = useRoute().params;
   .main-header {
     width: 100%;
   }
-  .carousel-prv{
-    display:none;
+  .carousel-prv {
+    display: none;
   }
-  .carousel-next{
-    display:none;
+  .carousel-next {
+    display: none;
   }
-  main{
+  main {
     height: auto;
+  }
+  .carousel {
+    width: 100vw;
   }
 }
 </style>

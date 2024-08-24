@@ -133,7 +133,7 @@
               </select>
             </div>
             <div class="m-2">
-              <p class="m-1">Blazer Size</p>
+              <p class="m-1">Blazer Size :</p>
               <select
                 class="rounded-[3px] p-3 text-[#07203F] w-80 bg-white border-[#07203F] border-solid border"
                 v-model="selectedCoatSize"
@@ -144,7 +144,7 @@
               </select>
             </div>
             <div class="m-2">
-              <p class="m-1">Trouser Size</p>
+              <p class="m-1">Trouser Size :</p>
               <select
                 class="rounded-[3px] p-3 text-[#07203F] w-80 bg-white border-[#07203F] border-solid border"
                 v-model="selectedPantSize"

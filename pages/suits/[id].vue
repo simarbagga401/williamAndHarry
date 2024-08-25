@@ -79,7 +79,7 @@
         <p class="w-72 m-5">
           {{ suits[parseInt(id.toString()) - 1].description }}
         </p>
-        <Carousel class="relative w-full max-w-sm carousel">
+        <Carousel class="relative w-[70%] max-w-sm carousel ">
           <CarouselContent class="bg-white p-0">
             <CarouselItem>
               <div>
@@ -91,7 +91,7 @@
               </div>
             </CarouselItem>
             <CarouselItem>
-              <div >
+              <div>
                 <CardContent
                   class="flex aspect-square items-center justify-center p-0"
                 >
@@ -105,10 +105,10 @@
         </Carousel>
       </header>
       <footer
-        class="flex flex-col items-center justify-center h-full w-1/2 main-footer m-5"
+        class="flex flex-col items-center justify-center h-full w-1/2 main-footer m-5 "
       >
         <div
-          class="size-selection-container p-2 h-1/3 flex flex-col justify-evenly"
+          class="size-selection-container p-2 flex flex-col justify-evenly  h-96"
         >
           <header class="flex p-1 w-full justify-between">
             <p class="font-bold mr-3">Select Specifications</p>
@@ -119,8 +119,8 @@
               Open Size Chart
             </p>
           </header>
-          <section>
-            <div class="m-2">
+          <section class="" >
+            <div class="m-2 ">
               <p class="m-1">2 Piece or 3 Piece :</p>
               <select
                 class="rounded-[3px] p-3 text-[#07203F] w-80 bg-white border-[#07203F] border-solid border"
@@ -154,7 +154,9 @@
             </div>
           </section>
         </div>
-        <footer class="flex items-center w-60 max-h-16 p-5 justify-between">
+        <footer
+          class="flex items-center w-60 max-h-16 p-5 justify-between "
+        >
           <p class="font-bold">
             ₹{{
               selectedPiece == "2 Piece"

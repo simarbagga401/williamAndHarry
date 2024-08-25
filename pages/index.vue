@@ -4,12 +4,12 @@
       <section class="block1"></section>
       <section class="block2"></section>
       <h1
-        class="font-bold text-6xl text-white p-3 m-5 mx-16 bg-[#07203F] absolute top-1/3 heading"
+        class="font-bold text-6xl text-white p-3 m-5 mx-16 bg-[#07203F] absolute  heading"
       >
         Premium Suits
       </h1>
       <p
-        class="text-2xl p-2 text-[#07203F] justify-self-center bg-slate-50 absolute top-1/2"
+        class="text-2xl p-2 text-[#07203F] justify-self-center bg-slate-50 absolute description"
       >
         Choose from a wide range of suits for every occasion.
       </p>
@@ -64,28 +64,6 @@
         <CarouselNext />
       </Carousel>
     </section>
-    <footer class="w-full h-[100px] bg-[#07203F] flex">
-      <div
-        class="footer-links-container h-full flex w-1/2 justify-center items-center"
-      >
-        <NuxtLink to="/" class="text-white p-5">Shop</NuxtLink>
-        <NuxtLink to="/aboutUs" class="text-white p-5">About Us</NuxtLink>
-        <NuxtLink to="/login" class="text-white p-5">Sign In</NuxtLink>
-      </div>
-      <div
-        class="footer-social-media-container h-full flex w-1/2 justify-center items-center"
-      >
-        <img
-          src="~/assets/images/instagram-brands-solid.svg"
-          class="social-media-link"
-        />
-        <img
-          src="~/assets/images/envelope-solid.svg"
-          class="social-media-link"
-        />
-        <img src="~/assets/images/phone-solid.svg" class="social-media-link" />
-      </div>
-    </footer>
   </main>
 </template>
 
@@ -167,13 +145,13 @@ img {
   border-radius: 5px;
 }
 
-.social-media-link {
-  width: 30px;
-  padding: 5px;
-  background-color: white;
-  margin: 10px;
-  border-radius: 4px;
+.heading{
+  top:250px;
 }
+.description{
+  top:380px;
+}
+
 
 @media (max-width: 768px) {
   img {
@@ -184,17 +162,6 @@ img {
   }
   .block2 {
     display: none;
-  }
-  footer {
-    flex-direction: column;
-    height: 200px;
-    align-items: center;
-  }
-  .footer-links-container {
-    width: 100%;
-  }
-  .footer-social-media-container {
-    width: 100%;
   }
 }
 

@@ -3,8 +3,8 @@
     <Hamburger v-if="mobile" class="navbar" />
     <Navbar v-else class="navbar" />
     <slot />
-    <Footer />
   </section>
+  <Footer />
 </template>
 
 <script setup lang="ts">

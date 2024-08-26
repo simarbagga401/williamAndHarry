@@ -125,7 +125,7 @@ const formSchema = toTypedSchema(
     name: z.string().min(2).max(50),
     mobileNo: z.string().min(10).max(10),
     pincode: z.string().min(6).max(6),
-    address: z.string().min(2).max(50),
+    address: z.string().min(2).max(150),
     town: z.string().min(2).max(50),
     district: z.string().min(2).max(50),
     state: z.string().min(2).max(50),

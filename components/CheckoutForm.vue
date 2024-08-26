@@ -227,7 +227,7 @@ const handlePayment = async (e: any) => {
             {
               ...data,
               orderId: response.razorpay_order_id,
-              amount: order.amount_due,
+              amount: order.amount_due / 100,
             }
           );
 

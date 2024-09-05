@@ -13,7 +13,6 @@
             <TableHead>Chest (in)</TableHead>
             <TableHead>Across Shoulder (in)</TableHead>
             <TableHead>Front Length (in)</TableHead>
-            <TableHead>To Fit Waist (in)</TableHead>
             <TableHead>Inseam Length (in)</TableHead>
           </TableRow>
         </TableHeader>
@@ -23,7 +22,6 @@
             <TableCell>38.0</TableCell>
             <TableCell>17.0</TableCell>
             <TableCell>27.0</TableCell>
-            <TableCell>30.0</TableCell>
             <TableCell>34.0</TableCell>
           </TableRow>
           <TableRow>
@@ -31,7 +29,6 @@
             <TableCell>40.0</TableCell>
             <TableCell>17.5</TableCell>
             <TableCell>27.5</TableCell>
-            <TableCell>32.0</TableCell>
             <TableCell>34.0</TableCell>
           </TableRow>
           <TableRow>
@@ -40,14 +37,12 @@
             <TableCell>18.0</TableCell>
             <TableCell>28.0</TableCell>
             <TableCell>34.0</TableCell>
-            <TableCell>34.0</TableCell>
           </TableRow>
           <TableRow>
             <TableCell class="font-bold">XL</TableCell>
             <TableCell>44.0</TableCell>
             <TableCell>18.5</TableCell>
             <TableCell>28.5</TableCell>
-            <TableCell>36.0</TableCell>
             <TableCell>34.0</TableCell>
           </TableRow>
           <TableRow>
@@ -55,7 +50,6 @@
             <TableCell>46.0</TableCell>
             <TableCell>19.0</TableCell>
             <TableCell>29.0</TableCell>
-            <TableCell>38.0</TableCell>
             <TableCell>34.0</TableCell>
           </TableRow>
         </TableBody>
@@ -76,7 +70,7 @@
         <h1 class="font-bold text-4xl text-[#07203F] m-5">
           {{ suits[parseInt(id.toString()) - 1].name }}
         </h1>
-        <p class="w-72 m-5">
+        <p class="w-72 m-5" v-if="!isMobile">
           {{ suits[parseInt(id.toString()) - 1].description }}
         </p>
         <Carousel class="relative w-[70%] max-w-sm carousel ">
@@ -103,6 +97,9 @@
           <CarouselPrevious class="carousel-prv" />
           <CarouselNext class="carousel-next" />
         </Carousel>
+        <p class="w-72 m-5" v-if="isMobile">
+          {{ suits[parseInt(id.toString()) - 1].description }}
+        </p>
       </header>
       <footer
         class="flex flex-col items-center justify-center h-full w-1/2 main-footer m-5 "
@@ -202,6 +199,8 @@ import { Toaster } from "@/components/ui/sonner";
 import { toast } from "vue-sonner";
 
 import { suits } from "~/products";
+
+const isMobile = window && window.innerWidth < 1000;
 
 const coatSizes = {
   1: "S",

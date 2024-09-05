@@ -1,7 +1,5 @@
 <template>
-  <section
-    class="flex flex-col items-center justify-evenly p-2 py-10 absolute w-full h-full"
-  >
+  <section class="flex flex-col items-center justify-evenly p-2 py-10 absolute w-full h-full">
     <Card class="w-1/2 p-5 min-w-[320px] max-w-2xl">
       <form @submit="handlePayment">
         <FormField name="name" v-slot="{ componentField }">
@@ -25,11 +23,7 @@
           <FormItem class="m-2">
             <FormLabel>Address</FormLabel>
             <FormControl>
-              <Input
-                placeholder="Pincode*"
-                v-bind="componentField"
-                @change="getCityState"
-              />
+              <Input placeholder="Pincode*" v-bind="componentField" @change="getCityState" />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -53,12 +47,7 @@
         <FormField name="district" v-slot="{ componentField }">
           <FormItem class="m-2">
             <FormControl>
-              <Input
-                placeholder="City*"
-                v-bind="componentField"
-                disabled
-                :value="district"
-              />
+              <Input placeholder="City*" v-bind="componentField" disabled :value="district" />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -66,22 +55,17 @@
         <FormField name="state" v-slot="{ componentField }">
           <FormItem class="m-2">
             <FormControl>
-              <Input
-                placeholder="State*"
-                v-bind="componentField"
-                disabled
-                :value="state"
-              />
+              <Input placeholder="State*" v-bind="componentField" disabled :value="state" />
             </FormControl>
             <FormMessage />
           </FormItem>
         </FormField>
-        <Button type="submit" class="m-2">Pay</Button>
-        <Button
-          class="m-2 bg-red-500 hover:bg-red-400"
-          @click="$emit('closeCheckoutForm')"
-          >Close</Button
-        >
+        <Button type="submit" class="m-2" v-show="!isLoading" >Pay</Button>
+        <Button disabled  v-show="isLoading">
+          <Loader2 class="w-4 h-4 mr-2 animate-spin" />
+          Please wait
+        </Button>
+        <Button class="m-2 bg-red-500 hover:bg-red-400" @click="$emit('closeCheckoutForm')">Close</Button>
       </form>
     </Card>
   </section>
@@ -93,6 +77,7 @@ import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import * as z from "zod";
 import logo from "~/assets/images/logo.png";
+import { Loader2 } from 'lucide-vue-next'
 
 import { db } from "~/firebase.js";
 import {
@@ -119,6 +104,10 @@ import zipcodes from "zipcodes";
 import { useUserDetailsStore } from "~/store/store";
 const store = useUserDetailsStore();
 const runtimeconfig = useRuntimeConfig();
+
+const isLoading = ref(false);
+
+
 
 const formSchema = toTypedSchema(
   z.object({
@@ -162,6 +151,7 @@ const handlePayment = async (e: any) => {
   ) {
     return alert("Some Order Details are missing!");
   }
+  isLoading.value = true;
   const data = {
     amount: store.totalAmount(),
     name: form.values.name,
@@ -232,6 +222,7 @@ const handlePayment = async (e: any) => {
           );
 
           store.cart = [];
+          isLoading.value = false;
           setTimeout(() => {
             window.location.reload();
           }, 1000);
